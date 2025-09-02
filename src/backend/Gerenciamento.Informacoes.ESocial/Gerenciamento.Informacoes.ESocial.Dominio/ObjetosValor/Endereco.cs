@@ -11,6 +11,6 @@ public class Endereco
     public string? Complemento { get; set; }
     public string? Bairro { get; set; }
     public string? CEP { get; set; }
-    public int MunicipioId { get; set; }
+    public string? Municipio { get; set; }
     public string? Uf { get; set; }
 }

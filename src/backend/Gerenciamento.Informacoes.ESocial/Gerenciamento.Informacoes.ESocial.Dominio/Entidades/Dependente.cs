@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
+﻿namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 
 public class Dependente
 {   
-    [Key]
     public int DependenteId { get; set; }
     public int TrabalhadorId { get; set; }
     public int TipoDependente { get; set; }

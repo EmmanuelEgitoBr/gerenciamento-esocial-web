@@ -1,11 +1,9 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Dominio.ObjetosValor;
-using System.ComponentModel.DataAnnotations;
 
 namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 
 public class Trabalhador
 {
-    [Key]
     public int TrabalhadorId { get; set; }
     public int Tipo { get; set; }
     public string? Nome { get; set; }
@@ -16,10 +14,10 @@ public class Trabalhador
     public bool IsPrimeiroEmprego { get; set; }
     public string? CodigoNomeTravTrans { get; set; }
     public DateTime? DataNascimento { get; set; }
-    public int MunicipioNascimentoId { get; set; }
+    public string? MunicipioNascimento { get; set; }
     public string? UfNascimento { get; set; }
-    public int PaisNascimentoId { get; set; }
-    public int NacionalidadeId { get; set; }
+    public string? PaisNascimento { get; set; }
+    public string? Nacionalidade { get; set; }
     public string? NomeMae { get; set; }
     public string? NomePai { get; set; }
     public Documento? DocumentosPessoais { get; set; }

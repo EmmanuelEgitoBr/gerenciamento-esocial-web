@@ -3,6 +3,6 @@ using Mpce.ECensoSocial.Domain.Domain.Entities;
 
 namespace Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 
-public interface IArquivoRepository : IRepositoryBase<Arquivo>
+public interface IArquivoRepository : IBaseRepository<Arquivo>
 {
 }

@@ -1,6 +1,6 @@
 ﻿namespace Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Base;
 
-public interface IRepositoryBase<T>
+public interface IBaseRepository<T>
 {
     Task<T> AddAsync(T obj);
     Task<T> GetByIdAsync(int? id);

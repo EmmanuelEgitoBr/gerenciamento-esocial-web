@@ -3,6 +3,6 @@ using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Base;
 
 namespace Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 
-public interface ICedidoRepository : IRepositoryBase<Cedido>
+public interface ICedidoRepository : IBaseRepository<Cedido>
 {
 }

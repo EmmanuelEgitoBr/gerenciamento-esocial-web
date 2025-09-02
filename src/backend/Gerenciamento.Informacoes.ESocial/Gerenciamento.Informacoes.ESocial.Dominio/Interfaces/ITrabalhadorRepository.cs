@@ -3,6 +3,6 @@ using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Base;
 
 namespace Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 
-public interface ITrabalhadorRepository : IRepositoryBase<Trabalhador>
+public interface ITrabalhadorRepository : IBaseRepository<Trabalhador>
 {
 }

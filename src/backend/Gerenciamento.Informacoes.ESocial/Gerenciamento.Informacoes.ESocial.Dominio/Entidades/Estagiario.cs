@@ -1,12 +1,9 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Dominio.ObjetosValor;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 
 public class Estagiario
 {
-    [Key]
     public int EstagiarioId { get; set; }
     public int TrabalhadorId { get; set; }
     public int NaturezaEstagio { get; set; }

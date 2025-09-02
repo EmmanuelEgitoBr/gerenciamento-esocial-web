@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
+﻿namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 
 public class Cedido
 {
-    [Key]
     public int CedidoId { get; set; }
     public int TrabalhadorId { get; set; }
     public string? CnpjEmpregadoCedido { get; set; }
