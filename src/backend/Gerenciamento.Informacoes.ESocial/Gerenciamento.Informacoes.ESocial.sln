@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36414.22 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Dominio", "Gerenciamento.Informacoes.ESocial.Dominio\Gerenciamento.Informacoes.ESocial.Dominio.csproj", "{86935C5D-7F43-483D-BA5A-8F65AEB37D73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Infra", "Gerenciamento.Informacoes.ESocial.Infra\Gerenciamento.Informacoes.ESocial.Infra.csproj", "{B331A87F-2694-4626-B4BC-D434E348E648}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Infra.Sql", "Gerenciamento.Informacoes.ESocial.Infra\Gerenciamento.Informacoes.ESocial.Infra.Sql.csproj", "{B331A87F-2694-4626-B4BC-D434E348E648}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Aplicacao", "Gerenciamento.Informacoes.ESocial.Aplicacao\Gerenciamento.Informacoes.ESocial.Aplicacao.csproj", "{DB6F8E5D-E28A-4D06-908A-0B14DDBBF4D4}"
 EndProject

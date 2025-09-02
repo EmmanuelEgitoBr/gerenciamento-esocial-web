@@ -1,4 +1,4 @@
-﻿using Mpce.ECensoSocial.Domain.Domain.Entities;
+﻿using Gerenciamento.Informacoes.ESocial.Dominio.Enums;
 
 namespace Gerenciamento.Informacoes.ESocial.Dominio.ObjetosValor;
 
