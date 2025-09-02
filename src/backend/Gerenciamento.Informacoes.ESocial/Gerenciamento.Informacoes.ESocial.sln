@@ -3,7 +3,43 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36414.22 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Dominio", "Gerenciamento.Informacoes.ESocial.Dominio\Gerenciamento.Informacoes.ESocial.Dominio.csproj", "{86935C5D-7F43-483D-BA5A-8F65AEB37D73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Infra", "Gerenciamento.Informacoes.ESocial.Infra\Gerenciamento.Informacoes.ESocial.Infra.csproj", "{B331A87F-2694-4626-B4BC-D434E348E648}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Aplicacao", "Gerenciamento.Informacoes.ESocial.Aplicacao\Gerenciamento.Informacoes.ESocial.Aplicacao.csproj", "{DB6F8E5D-E28A-4D06-908A-0B14DDBBF4D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.CrossCutting", "Gerenciamento.Informacoes.ESocial.CrossCutting\Gerenciamento.Informacoes.ESocial.CrossCutting.csproj", "{4AF956DD-3BFB-491B-9543-02623B93A33A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Api", "Gerenciamento.Informacoes.ESocial.Api\Gerenciamento.Informacoes.ESocial.Api.csproj", "{72256F73-2008-43B2-897F-74EF5E7AB4A7}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86935C5D-7F43-483D-BA5A-8F65AEB37D73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86935C5D-7F43-483D-BA5A-8F65AEB37D73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86935C5D-7F43-483D-BA5A-8F65AEB37D73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86935C5D-7F43-483D-BA5A-8F65AEB37D73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B331A87F-2694-4626-B4BC-D434E348E648}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B331A87F-2694-4626-B4BC-D434E348E648}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B331A87F-2694-4626-B4BC-D434E348E648}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B331A87F-2694-4626-B4BC-D434E348E648}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB6F8E5D-E28A-4D06-908A-0B14DDBBF4D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB6F8E5D-E28A-4D06-908A-0B14DDBBF4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB6F8E5D-E28A-4D06-908A-0B14DDBBF4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB6F8E5D-E28A-4D06-908A-0B14DDBBF4D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AF956DD-3BFB-491B-9543-02623B93A33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AF956DD-3BFB-491B-9543-02623B93A33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AF956DD-3BFB-491B-9543-02623B93A33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AF956DD-3BFB-491B-9543-02623B93A33A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72256F73-2008-43B2-897F-74EF5E7AB4A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72256F73-2008-43B2-897F-74EF5E7AB4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72256F73-2008-43B2-897F-74EF5E7AB4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72256F73-2008-43B2-897F-74EF5E7AB4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
