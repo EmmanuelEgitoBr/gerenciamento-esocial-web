@@ -11,7 +11,7 @@ using System.Security.Claims;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/v1/auth")]
 [ApiController]
 public class AuthController : ControllerBase
 {
@@ -39,6 +39,11 @@ public class AuthController : ControllerBase
 
     #region Authentication
 
+    /// <summary>
+    /// Endpoint para o Login do sistema
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost("Login")]
     public async Task<IActionResult> Login([FromBody] LoginModel model)
     {
@@ -85,6 +90,11 @@ public class AuthController : ControllerBase
         return Unauthorized();
     }
 
+    /// <summary>
+    /// Endpoint para registro de um novo funcionário
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] RegisterModel model)
     {
@@ -126,6 +136,12 @@ public class AuthController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// Endpoint para geração do refresh token
+    /// </summary>
+    /// <param name="tokenModel"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     [HttpPost("Refresh-Token")]
     public async Task<IActionResult> RefreshToken(TokenModel tokenModel)
     {
@@ -165,6 +181,11 @@ public class AuthController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// Endpoint para revogar token
+    /// </summary>
+    /// <param name="username"></param>
+    /// <returns></returns>
     [Authorize]
     [HttpPost("Revoke/{username}")]
     [Authorize(Policy = "ExclusiveOnly")]
@@ -184,6 +205,11 @@ public class AuthController : ControllerBase
 
     #region Authorization Policies
 
+    /// <summary>
+    /// Endpoint para criação de um tipo de usuário do sistema
+    /// </summary>
+    /// <param name="roleName"></param>
+    /// <returns></returns>
     [HttpPost("CreateRole")]
     [Authorize(Policy = "SuperAdminOnly")]
     public async Task<IActionResult> CreateRole(string roleName)
@@ -224,6 +250,12 @@ public class AuthController : ControllerBase
                                     });
     }
 
+    /// <summary>
+    /// Endpoint para associar um tipo de usuário a um usuário específico
+    /// </summary>
+    /// <param name="userIdentifier"></param>
+    /// <param name="roleName"></param>
+    /// <returns></returns>
     [HttpPost("AddUserToRole")]
     [Authorize(Policy = "SuperAdminOnly")]
     public async Task<IActionResult> AddUserToRole(string userIdentifier, string roleName)
