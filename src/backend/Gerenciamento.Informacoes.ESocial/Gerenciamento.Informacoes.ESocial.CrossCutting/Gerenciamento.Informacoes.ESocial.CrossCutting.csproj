@@ -14,6 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Gerenciamento.Informacoes.ESocial.Aplicacao.Command\Gerenciamento.Informacoes.ESocial.Aplicacao.Command.csproj" />
+    <ProjectReference Include="..\Gerenciamento.Informacoes.ESocial.Aplicacao.Query\Gerenciamento.Informacoes.ESocial.Aplicacao.Query.csproj" />
     <ProjectReference Include="..\Gerenciamento.Informacoes.ESocial.Aplicacao\Gerenciamento.Informacoes.ESocial.Aplicacao.csproj" />
     <ProjectReference Include="..\Gerenciamento.Informacoes.ESocial.Dominio\Gerenciamento.Informacoes.ESocial.Dominio.csproj" />
     <ProjectReference Include="..\Gerenciamento.Informacoes.ESocial.Infra\Gerenciamento.Informacoes.ESocial.Infra.Sql.csproj" />

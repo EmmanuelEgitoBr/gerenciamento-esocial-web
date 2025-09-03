@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Mappings;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Mappings;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Base;
 using Gerenciamento.Informacoes.ESocial.Infra.Sql.Context;
@@ -29,6 +30,7 @@ public static class DependencyInjection
         IMapper mapper = MappingConfiguration.RegisterMap().CreateMapper();
         services.AddScoped<IMapper>(_ => mapper);
         services.AddAutoMapper(typeof(MappingConfiguration));
+        services.AddAutoMapper(typeof(MappingQueryConfiguration));
     }
 
     public static void AddApplicationServices(this IServiceCollection services)

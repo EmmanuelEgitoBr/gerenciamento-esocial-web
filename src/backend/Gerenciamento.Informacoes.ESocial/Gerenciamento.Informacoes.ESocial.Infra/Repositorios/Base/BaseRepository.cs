@@ -26,9 +26,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         return await _db.Set<T>().FindAsync(id);
     }
 
-    public IEnumerable<T> GetAllAsync()
+    public async Task<IEnumerable<T>> GetAllAsync()
     {
-        return _db.Set<T>().AsNoTracking().AsEnumerable();
+        return await _db.Set<T>().AsNoTracking().ToListAsync();
     }
 
     public async Task UpdateAsync(T obj)

@@ -1,6 +1,6 @@
-﻿namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
+﻿namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Dtos;
 
-public class Arquivo
+public class ArquivoDto
 {
     public int ArquivoId { get; set; }
     public int? TrabalhadorId { get; set; }
