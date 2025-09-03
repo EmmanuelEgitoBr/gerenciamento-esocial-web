@@ -7,6 +7,7 @@ using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.DependenteQuery.
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.DependenteQuery.GetDependenteByIdQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.DependenteQuery.GetDependenteByTrabalhadorIdQuery;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
 {
@@ -42,6 +43,21 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
         public async Task<ActionResult<ApiResponse<DependenteDto>>> GetDependenteById(int id)
         {
             var result = await _mediator.Send(new GetDependenteByIdQuery { DependenteId = id });
+
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Retorna os dependentes por id do trabalhador
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("trabalhador/{id}")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<DependenteDto>>>> GetDependentesByTrabalhadorId(int id)
+        {
+            var result = await _mediator.Send(new GetDependenteByTrabalhadorIdQuery { TrabalhadorId = id });
 
             if (!result.Success) return BadRequest(result);
 

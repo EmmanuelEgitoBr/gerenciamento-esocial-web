@@ -5,4 +5,5 @@ namespace Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 
 public interface IDependenteRepository : IBaseRepository<Dependente>
 {
+    Task<IEnumerable<Dependente>> GetDependentesByTrabalhadorIdAsync(int trabalhadorId);
 }

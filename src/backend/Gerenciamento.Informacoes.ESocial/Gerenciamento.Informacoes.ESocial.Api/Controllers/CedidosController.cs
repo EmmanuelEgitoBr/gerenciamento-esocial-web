@@ -7,6 +7,7 @@ using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.CedidoQuery.GetA
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.CedidoQuery.GetCedidoByIdQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.CedidoQuery.GetCedidoByTrabalhadorIdQuery;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
 {
@@ -42,6 +43,21 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
         public async Task<ActionResult<ApiResponse<CedidoDto>>> GetCedidoById(int id)
         {
             var result = await _mediator.Send(new GetCedidoByIdQuery { CedidoId = id });
+
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Retorna cedidos pelo id do trabalhador
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("trabalhador/{id}")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<CedidoDto>>>> GetCedidosByTrabalhadorId(int id)
+        {
+            var result = await _mediator.Send(new GetCedidoByTrabalhadorIdQuery { TrabalhadorId = id });
 
             if (!result.Success) return BadRequest(result);
 
