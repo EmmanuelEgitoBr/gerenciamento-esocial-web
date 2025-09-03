@@ -1,6 +1,5 @@
-﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.Models;
-using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
-using Gerenciamento.Informacoes.ESocial.Infra.Sql.Repositorios;
+﻿using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
+using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using MediatR;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Command.TrabalhadorCommand.RemoverTrabalhadorCommand;

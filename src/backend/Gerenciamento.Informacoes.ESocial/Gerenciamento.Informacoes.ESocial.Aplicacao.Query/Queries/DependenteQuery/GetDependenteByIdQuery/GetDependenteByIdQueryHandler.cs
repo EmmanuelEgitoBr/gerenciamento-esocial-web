@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Dtos;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Models;
+using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using MediatR;
 

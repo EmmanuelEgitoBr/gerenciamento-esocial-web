@@ -1,6 +1,6 @@
-﻿namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Command.Models;
+﻿namespace Gerenciamento.Informacoes.ESocial.Dominio.Models;
 
-public record ApiResponse<T>
+public class ApiResponse<T>
 {
     public bool Success { get; set; }
     public T? Result { get; set; }
@@ -10,7 +10,7 @@ public record ApiResponse<T>
     {
     }
 
-    public ApiResponse(bool success, T? result, string? errorMessage) 
+    public ApiResponse(bool success, T? result, string? errorMessage)
     {
         Success = success;
         Result = result;

@@ -2,7 +2,7 @@
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.CedidoCommand.CriarCedidoCommand;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.CedidoCommand.RemoverCedidoCommand;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Dtos;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Models;
+using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.CedidoQuery.GetAllCedidosQuery;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.CedidoQuery.GetCedidoByIdQuery;
 using MediatR;

@@ -1,7 +1,7 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.EstagiarioCommand.AtualizarEstagiarioCommand;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.EstagiarioCommand.CriarEstagiarioCommand;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.EstagiarioCommand.RemoverEstagiarioCommand;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.Models;
+using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Dtos;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.EstagiarioQuery.GetAllEstagiarioQuery;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.EstagiarioQuery.GetEstagiarioByIdQuery;

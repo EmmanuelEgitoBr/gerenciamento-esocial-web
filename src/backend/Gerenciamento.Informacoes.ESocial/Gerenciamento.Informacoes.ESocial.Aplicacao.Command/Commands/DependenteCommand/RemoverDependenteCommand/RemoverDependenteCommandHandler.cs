@@ -1,4 +1,4 @@
-﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.Models;
+﻿using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using MediatR;
 

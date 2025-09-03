@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Dtos;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Models;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
-using Gerenciamento.Informacoes.ESocial.Infra.Sql.Repositorios;
+using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using MediatR;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.EstagiarioQuery.GetAllEstagiarioQuery;
