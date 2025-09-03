@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Api", "Gerenciamento.Informacoes.ESocial.Api\Gerenciamento.Informacoes.ESocial.Api.csproj", "{72256F73-2008-43B2-897F-74EF5E7AB4A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Aplicacao.Command", "Gerenciamento.Informacoes.ESocial.Aplicacao.Command\Gerenciamento.Informacoes.ESocial.Aplicacao.Command.csproj", "{912AA661-1247-4EDA-B7FD-A75DD01B8C84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Aplicacao.Query", "Gerenciamento.Informacoes.ESocial.Aplicacao.Query\Gerenciamento.Informacoes.ESocial.Aplicacao.Query.csproj", "{073E1CB4-DB13-4F6D-A0B2-85E0CE681B41}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{72256F73-2008-43B2-897F-74EF5E7AB4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72256F73-2008-43B2-897F-74EF5E7AB4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72256F73-2008-43B2-897F-74EF5E7AB4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{912AA661-1247-4EDA-B7FD-A75DD01B8C84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{912AA661-1247-4EDA-B7FD-A75DD01B8C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{912AA661-1247-4EDA-B7FD-A75DD01B8C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{912AA661-1247-4EDA-B7FD-A75DD01B8C84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{073E1CB4-DB13-4F6D-A0B2-85E0CE681B41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{073E1CB4-DB13-4F6D-A0B2-85E0CE681B41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{073E1CB4-DB13-4F6D-A0B2-85E0CE681B41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{073E1CB4-DB13-4F6D-A0B2-85E0CE681B41}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
