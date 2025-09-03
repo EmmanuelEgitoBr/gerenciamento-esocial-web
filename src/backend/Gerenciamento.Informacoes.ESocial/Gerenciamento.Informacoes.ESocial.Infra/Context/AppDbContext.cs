@@ -1,6 +1,5 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
-using Mpce.ECensoSocial.Domain.Domain.Entities;
 
 namespace Gerenciamento.Informacoes.ESocial.Infra.Sql.Context;
 

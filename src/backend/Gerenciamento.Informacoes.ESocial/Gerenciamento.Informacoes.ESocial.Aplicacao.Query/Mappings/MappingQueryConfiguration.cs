@@ -6,7 +6,7 @@ namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Mappings;
 
 public class MappingQueryConfiguration
 {
-    public static MappingQueryConfiguration RegisterMap()
+    public static MapperConfiguration RegisterMap()
     {
         var mapperConfiguration = new MapperConfiguration(config =>
         {

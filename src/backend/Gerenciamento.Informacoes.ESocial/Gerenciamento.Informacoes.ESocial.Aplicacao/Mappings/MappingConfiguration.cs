@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Dtos;
 using Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
-using Mpce.ECensoSocial.Domain.Domain.Entities;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Mappings;
 
