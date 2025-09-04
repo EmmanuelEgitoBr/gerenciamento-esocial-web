@@ -46,6 +46,9 @@ public class TrabalhadorService : ITrabalhadorService
 
             await _rabbitMqService.SendMessageAsync(message, queueName);
 
+            trabalhador.StatusCadastro = (StatusCadastro)novoStatus;
+            await _trabalhadorRepository.UpdateAsync(trabalhador);
+
             return new ApiResponse<MessageModel>(true, message, null);
         }
         catch (Exception ex)

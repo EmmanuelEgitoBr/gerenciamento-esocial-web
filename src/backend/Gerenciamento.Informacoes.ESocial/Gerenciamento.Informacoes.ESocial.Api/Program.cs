@@ -16,6 +16,7 @@ builder.Services.AddApplicationServices();
 builder.AddAuthConfiguration();
 builder.Services.AddSecurityInfrastructure(builder.Configuration);
 builder.Services.AddRabbitMqConfiguration();
+builder.AddEmailConfiguration();
 
 var app = builder.Build();
 

@@ -98,7 +98,14 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("{trabalhadorId}/atualizar-status")]
+        /// <summary>
+        /// Endpoint para atualizar status do cadastro do trabalhador
+        /// </summary>
+        /// <param name="trabalhadorId"></param>
+        /// <param name="novoStatus"></param>
+        /// <param name="pendenciasCadastro"></param>
+        /// <returns></returns>
+        [HttpPost("{trabalhadorId}/cadastro/atualizar-status")]
         public async Task<ActionResult> AtualizarStatusCadastro(int trabalhadorId, 
             [FromQuery] int novoStatus,
             [FromBody] string? pendenciasCadastro)

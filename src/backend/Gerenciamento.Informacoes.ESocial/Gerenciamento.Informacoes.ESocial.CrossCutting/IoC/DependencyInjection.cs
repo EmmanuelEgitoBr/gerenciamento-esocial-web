@@ -4,6 +4,7 @@ using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Messaging;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Settings;
 using Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Auth;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Base;
@@ -11,6 +12,7 @@ using Gerenciamento.Informacoes.ESocial.Infra.Sql.Context;
 using Gerenciamento.Informacoes.ESocial.Infra.Sql.Repositorios;
 using Gerenciamento.Informacoes.ESocial.Infra.Sql.Repositorios.Base;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -124,5 +126,12 @@ public static class DependencyInjection
             UserName = "guest",
             Password = "guest"
         });
+    }
+
+    public static void AddEmailConfiguration(this WebApplicationBuilder builder)
+    {
+        builder.Services.Configure<EmailSettings>(
+            builder.Configuration.GetSection("Smtp"));
+        builder.Services.AddScoped<IEmailService, EmailService>();
     }
 }

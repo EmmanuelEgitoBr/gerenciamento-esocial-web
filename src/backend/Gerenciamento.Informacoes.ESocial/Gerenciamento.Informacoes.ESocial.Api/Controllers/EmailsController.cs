@@ -1,16 +1,28 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Models;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
 {
     [Route("api/v1/emails")]
     [ApiController]
-    public class EmailsController : ControllerBase
+    public class EmailsController(IEmailService emailService) : ControllerBase
     {
-        [HttpPost("send")]
-        public IActionResult EnviarEmailConfirmacao()
+        private readonly IEmailService _emailService = emailService;
+
+        /// <summary>
+        /// Endpoint para envio de email
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost("send-email")]
+        public async Task<ActionResult> EnviarEmailConfirmacao([FromBody] EmailModel model)
         {
-            return Ok();
+            var result = await _emailService.SendEmailAsync(model);
+
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
         }
     }
 }
