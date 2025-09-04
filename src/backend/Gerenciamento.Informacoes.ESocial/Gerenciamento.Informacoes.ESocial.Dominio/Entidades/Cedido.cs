@@ -1,4 +1,6 @@
-﻿namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
+﻿using Gerenciamento.Informacoes.ESocial.Dominio.Enums;
+
+namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 
 public class Cedido
 {
@@ -7,9 +9,9 @@ public class Cedido
     public string? CnpjEmpregadoCedido { get; set; }
     public string? MatriculaTrabalhador { get; set; }
     public DateTime? DataAdmissao { get; set; }
-    public int TipoRegTrab { get; set; }
-    public int TipoRegPrev { get; set; }
-    public int OnusCessReqId { get; set; }
-    public int? CategoriaId { get; set; }
+    public TipoRegimeTrabalhista TipoRegTrab { get; set; }
+    public TipoRegimePrevidenciario TipoRegPrev { get; set; }
+    public OnusCessaoRequisicao OnusCessReq { get; set; }
+    public CategoriaTrabalhador Categoria { get; set; }
     public Trabalhador? Trabalhador { get; set; }
 }

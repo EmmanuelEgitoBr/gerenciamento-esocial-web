@@ -1,4 +1,5 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
+using Gerenciamento.Informacoes.ESocial.Dominio.Enums;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using MediatR;
@@ -37,10 +38,10 @@ public class CriarCedidoCommandHandler : IRequestHandler<CriarCedidoCommand, Api
             CnpjEmpregadoCedido = request.CnpjEmpregadoCedido,
             MatriculaTrabalhador = request.MatriculaTrabalhador,
             DataAdmissao = request.DataAdmissao,
-            TipoRegTrab = request.TipoRegTrab,
-            TipoRegPrev = request.TipoRegPrev,
-            OnusCessReqId = request.OnusCessReqId,
-            CategoriaId = request.CategoriaId
+            TipoRegTrab = (TipoRegimeTrabalhista)request.TipoRegTrab,
+            TipoRegPrev = (TipoRegimePrevidenciario)request.TipoRegPrev,
+            OnusCessReq = (OnusCessaoRequisicao)request.OnusCessReq,
+            Categoria = (CategoriaTrabalhador)request.Categoria!
         };
     }
 }

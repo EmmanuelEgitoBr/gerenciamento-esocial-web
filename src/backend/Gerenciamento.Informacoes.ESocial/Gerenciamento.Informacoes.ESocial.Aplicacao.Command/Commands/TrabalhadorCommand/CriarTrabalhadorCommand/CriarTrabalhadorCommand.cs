@@ -8,10 +8,10 @@ public class CriarTrabalhadorCommand : IRequest<ApiResponse<int>>
 {
     public int Tipo { get; set; }
     public string? Nome { get; set; }
-    public int SexoId { get; set; }
-    public int RacaCorId { get; set; }
-    public int EstadoCivilId { get; set; }
-    public int GrauInstrucaoId { get; set; }
+    public int Sexo { get; set; }
+    public int RacaCor { get; set; }
+    public int EstadoCivil { get; set; }
+    public int GrauInstrucao { get; set; }
     public bool IsPrimeiroEmprego { get; set; }
     public string? CodigoNomeTravTrans { get; set; }
     public DateTime? DataNascimento { get; set; }

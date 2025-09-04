@@ -1,16 +1,17 @@
-﻿using Gerenciamento.Informacoes.ESocial.Dominio.ObjetosValor;
+﻿using Gerenciamento.Informacoes.ESocial.Dominio.Enums;
+using Gerenciamento.Informacoes.ESocial.Dominio.ObjetosValor;
 
 namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 
 public class Trabalhador
 {
     public int TrabalhadorId { get; set; }
-    public int Tipo { get; set; }
+    public TipoVinculo Tipo { get; set; }
     public string? Nome { get; set; }
-    public int SexoId { get; set; }
-    public int RacaCorId { get; set; }
-    public int EstadoCivilId { get; set; }
-    public int GrauInstrucaoId { get; set; }
+    public Sexo Sexo { get; set; }
+    public RacaCor RacaCor { get; set; }
+    public EstadoCivil EstadoCivil { get; set; }
+    public GrauInstrucao GrauInstrucao { get; set; }
     public bool IsPrimeiroEmprego { get; set; }
     public string? CodigoNomeTravTrans { get; set; }
     public DateTime? DataNascimento { get; set; }

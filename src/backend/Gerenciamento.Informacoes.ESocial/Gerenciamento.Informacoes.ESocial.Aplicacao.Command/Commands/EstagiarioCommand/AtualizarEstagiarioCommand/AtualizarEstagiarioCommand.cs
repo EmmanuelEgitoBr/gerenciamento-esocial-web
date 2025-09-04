@@ -8,7 +8,7 @@ public class AtualizarEstagiarioCommand : IRequest<ApiResponse<int>>
 {
     public int TrabalhadorId { get; set; }
     public int NaturezaEstagio { get; set; }
-    public int? AreaAtuacaoId { get; set; }
+    public int? AreaAtuacao { get; set; }
     public string? RazaoSocialInstEnsino { get; set; }
     public string? CnpjInstEnsino { get; set; }
     public string? NomeSupervisor { get; set; }

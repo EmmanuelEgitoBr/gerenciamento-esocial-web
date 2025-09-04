@@ -2,6 +2,7 @@
 using Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using MediatR;
+using Gerenciamento.Informacoes.ESocial.Dominio.Enums;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Command.TrabalhadorCommand.CriarTrabalhadorCommand;
 
@@ -33,12 +34,12 @@ public class CriarTrabalhadorCommandHandler : IRequestHandler<CriarTrabalhadorCo
     {
         return new Trabalhador
         {
-            Tipo = request.Tipo,
+            Tipo = (TipoVinculo)request.Tipo,
             Nome = request.Nome,
-            SexoId = request.SexoId,
-            RacaCorId = request.RacaCorId,
-            EstadoCivilId = request.EstadoCivilId,
-            GrauInstrucaoId = request.GrauInstrucaoId,
+            Sexo = (Sexo)request.Sexo,
+            RacaCor = (RacaCor)request.RacaCor,
+            EstadoCivil = (EstadoCivil)request.EstadoCivil,
+            GrauInstrucao = (GrauInstrucao)request.GrauInstrucao,
             IsPrimeiroEmprego = request.IsPrimeiroEmprego,
             CodigoNomeTravTrans = request.CodigoNomeTravTrans,
             DataNascimento = request.DataNascimento,

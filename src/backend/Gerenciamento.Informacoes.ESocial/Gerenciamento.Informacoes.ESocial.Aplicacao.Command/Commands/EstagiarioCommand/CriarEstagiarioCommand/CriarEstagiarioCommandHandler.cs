@@ -2,6 +2,7 @@
 using Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using MediatR;
+using Gerenciamento.Informacoes.ESocial.Dominio.Enums;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Command.EstagiarioCommand.CriarEstagiarioCommand;
 
@@ -34,8 +35,8 @@ public class CriarEstagiarioCommandHandler : IRequestHandler<CriarEstagiarioComm
         return new Estagiario
         {
             TrabalhadorId = request.TrabalhadorId,
-            NaturezaEstagio = request.NaturezaEstagio,
-            AreaAtuacaoId = request.AreaAtuacaoId,
+            NaturezaEstagio = (NaturezaEstagio)request.NaturezaEstagio,
+            AreaAtuacao = (AreaAtuacao)request.AreaAtuacao!,
             RazaoSocialInstEnsino = request.RazaoSocialInstEnsino,
             CnpjInstEnsino = request.CnpjInstEnsino,
             NomeSupervisor = request.NomeSupervisor,

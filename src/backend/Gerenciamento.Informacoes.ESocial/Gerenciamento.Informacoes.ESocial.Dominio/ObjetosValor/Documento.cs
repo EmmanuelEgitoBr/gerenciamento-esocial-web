@@ -1,4 +1,6 @@
-﻿namespace Gerenciamento.Informacoes.ESocial.Dominio.ObjetosValor;
+﻿using Gerenciamento.Informacoes.ESocial.Dominio.Enums;
+
+namespace Gerenciamento.Informacoes.ESocial.Dominio.ObjetosValor;
 
 public class Documento
 {
@@ -19,5 +21,5 @@ public class Documento
     public string? UfCnh { get; set; }
     public DateTime? DataValidadeCnh { get; set; }
     public DateTime? DataPrimeiraHabilitacao { get; set; }
-    public int? CategoriaCnhId { get; set; }
+    public CategoriaCnh CategoriaCnh { get; set; }
 }
