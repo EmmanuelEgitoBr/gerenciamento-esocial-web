@@ -4,7 +4,7 @@ using Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Mappings;
 
-public class MappingQueryConfiguration
+public class MappingConfiguration
 {
     public static MapperConfiguration RegisterMap()
     {

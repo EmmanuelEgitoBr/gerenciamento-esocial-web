@@ -54,7 +54,7 @@ public class CriarTrabalhadorCommandHandler : IRequestHandler<CriarTrabalhadorCo
             DadosDeficiencia = request.DadosDeficiencia,
             RecebeBeneficioPrevidencia = request.RecebeBeneficioPrevidencia,
             Contato = request.Contato,
-            IsVerificado = request.IsVerificado,
+            StatusCadastro = (StatusCadastro)request.StatusCadastro,
             DataCadastro = request.DataCadastro,
             DataUltimaAtualizacao = request.DataUltimaAtualizacao
         };

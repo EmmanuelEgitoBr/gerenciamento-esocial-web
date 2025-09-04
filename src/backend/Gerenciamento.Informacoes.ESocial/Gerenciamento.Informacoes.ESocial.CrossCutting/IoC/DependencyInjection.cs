@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.TrabalhadorCommand.CriarTrabalhadorCommand;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Mappings;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Mappings;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery.GetTrabalhadorByIdQuery;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Messaging;
 using Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Auth;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Base;
@@ -17,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using RabbitMQ.Client;
 using System.Text;
 
 namespace Gerenciamento.Informacoes.ESocial.CrossCutting.IoC;
@@ -35,10 +35,9 @@ public static class DependencyInjection
 
     public static void AddAutoMapperConfiguration(this IServiceCollection services)
     {
-        IMapper mapper = MappingConfiguration.RegisterMap().CreateMapper();
+        IMapper mapper = Aplicacao.Query.Mappings.MappingConfiguration.RegisterMap().CreateMapper();
         services.AddScoped<IMapper>(_ => mapper);
-        services.AddAutoMapper(typeof(MappingConfiguration));
-        services.AddAutoMapper(typeof(MappingQueryConfiguration));
+        services.AddAutoMapper(typeof(Aplicacao.Query.Mappings.MappingConfiguration));
     }
 
     public static void AddApplicationServices(this IServiceCollection services)
@@ -112,6 +111,17 @@ public static class DependencyInjection
             {
                 policy.WithOrigins("http://www.apirequest.io");
             });
+        });
+    }
+
+    public static void AddRabbitMqConfiguration(this IServiceCollection services)
+    {
+        services.AddScoped<IRabbitMqMessageSenderService, RabbitMqMessageSenderService>();
+        services.AddSingleton(new ConnectionFactory
+        {
+            HostName = "localhost",
+            UserName = "guest",
+            Password = "guest"
         });
     }
 }

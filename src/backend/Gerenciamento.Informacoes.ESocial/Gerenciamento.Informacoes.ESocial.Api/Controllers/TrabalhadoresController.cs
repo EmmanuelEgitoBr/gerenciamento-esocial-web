@@ -92,5 +92,13 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost("{trabalhadorId}/atualizar-status")]
+        public IActionResult AtualizarStatusCadastro(int trabalhadorId, 
+            [FromQuery] int novoStatus,
+            [FromBody] string? pendenciasCadastro)
+        {
+            return Ok(trabalhadorId);
+        }
     }
 }

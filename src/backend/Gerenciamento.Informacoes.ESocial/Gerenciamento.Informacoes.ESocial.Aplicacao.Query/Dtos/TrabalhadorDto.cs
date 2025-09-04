@@ -26,7 +26,7 @@ public class TrabalhadorDto
     public Deficiencia? DadosDeficiencia { get; set; }
     public bool RecebeBeneficioPrevidencia { get; set; }
     public Contato? Contato { get; set; }
-    public bool IsVerificado { get; set; }
+    public StatusCadastro StatusCadastro { get; set; }
     public DateTime DataCadastro { get; set; } = DateTime.Now;
     public DateTime? DataUltimaAtualizacao { get; set; }
     public ICollection<DependenteDto>? Dependentes { get; set; }

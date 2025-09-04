@@ -26,7 +26,7 @@ public class AtualizarTrabalhadorCommand : IRequest<ApiResponse<int>>
     public Deficiencia? DadosDeficiencia { get; set; }
     public bool RecebeBeneficioPrevidencia { get; set; }
     public Contato? Contato { get; set; }
-    public bool IsVerificado { get; set; }
+    public int StatusCadastro { get; set; }
     public DateTime DataCadastro { get; set; } = DateTime.Now;
     public DateTime? DataUltimaAtualizacao { get; set; }
 }

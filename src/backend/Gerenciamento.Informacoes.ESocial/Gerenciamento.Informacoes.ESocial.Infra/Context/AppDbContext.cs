@@ -1,5 +1,6 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 using Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Auth;
+using Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Cadastro;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Dependente> Dependentes { get; set; }
     public DbSet<Estagiario> Estagiarios { get; set; }
     public DbSet<Trabalhador> Trabalhadores { get; set; }
+    public DbSet<LogStatusCadastro> LogStatusCadastros { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

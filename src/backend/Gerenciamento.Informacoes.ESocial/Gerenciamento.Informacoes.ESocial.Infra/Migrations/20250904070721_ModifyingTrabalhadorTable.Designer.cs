@@ -4,6 +4,7 @@ using Gerenciamento.Informacoes.ESocial.Infra.Sql.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gerenciamento.Informacoes.ESocial.Infra.Sql.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250904070721_ModifyingTrabalhadorTable")]
+    partial class ModifyingTrabalhadorTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,37 +133,6 @@ namespace Gerenciamento.Informacoes.ESocial.Infra.Sql.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Cadastro.LogStatusCadastro", b =>
-                {
-                    b.Property<int>("LogStatusCadastroId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LogStatusCadastroId"));
-
-                    b.Property<DateTime?>("DataEventoLog")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EmailTrabalhador")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsEmailRecebido")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Pendencias")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StatusCadastro")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrabalhadorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LogStatusCadastroId");
-
-                    b.ToTable("LogStatusCadastros");
                 });
 
             modelBuilder.Entity("Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Cedido", b =>
