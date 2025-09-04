@@ -10,18 +10,18 @@ public class TrabalhadorConfiguration : IEntityTypeConfiguration<Trabalhador>
     {
         builder.HasKey(t => t.TrabalhadorId);
 
-        // Relacionamentos 1:N
-        builder.HasMany(t => t.Cedidos)
+        builder.HasOne(t => t.Cedido)
                .WithOne(c => c.Trabalhador)
-               .HasForeignKey(c => c.TrabalhadorId);
+               .HasForeignKey<Cedido>(c => c.TrabalhadorId);
 
+        // Relacionamento 1:N
         builder.HasMany(t => t.Dependentes)
                .WithOne(d => d.Trabalhador)
                .HasForeignKey(d => d.TrabalhadorId);
 
-        builder.HasMany(t => t.Estagiarios)
+        builder.HasOne(t => t.Estagiario)
                .WithOne(e => e.Trabalhador)
-               .HasForeignKey(e => e.TrabalhadorId);
+               .HasForeignKey<Estagiario>(e => e.TrabalhadorId);
 
         // Value Objects (colunas embutidas)
         builder.OwnsOne(t => t.DocumentosPessoais);

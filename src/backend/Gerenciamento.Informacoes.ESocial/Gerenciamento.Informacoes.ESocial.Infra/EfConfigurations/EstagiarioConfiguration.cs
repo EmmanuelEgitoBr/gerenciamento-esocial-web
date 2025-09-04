@@ -11,8 +11,8 @@ public class EstagiarioConfiguration : IEntityTypeConfiguration<Estagiario>
         builder.HasKey(e => e.EstagiarioId);
 
         builder.HasOne(e => e.Trabalhador)
-               .WithMany(t => t.Estagiarios)
-               .HasForeignKey(e => e.TrabalhadorId);
+               .WithOne(t => t.Estagiario)
+               .HasForeignKey<Estagiario>(e => e.TrabalhadorId);
 
         // Endereço da instituição como Value Object
         builder.OwnsOne(e => e.EnderecoInstEnsino);

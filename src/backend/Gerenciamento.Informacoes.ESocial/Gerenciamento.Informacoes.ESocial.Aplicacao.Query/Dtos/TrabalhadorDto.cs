@@ -30,6 +30,6 @@ public class TrabalhadorDto
     public DateTime DataCadastro { get; set; } = DateTime.Now;
     public DateTime? DataUltimaAtualizacao { get; set; }
     public ICollection<DependenteDto>? Dependentes { get; set; }
-    public ICollection<EstagiarioDto>? Estagiarios { get; set; }
-    public ICollection<CedidoDto>? Cedidos { get; set; }
+    public EstagiarioDto? Estagiarios { get; set; }
+    public CedidoDto? Cedidos { get; set; }
 }

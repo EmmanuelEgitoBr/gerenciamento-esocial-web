@@ -11,8 +11,8 @@ public class CedidoConfiguration : IEntityTypeConfiguration<Cedido>
         builder.HasKey(c => c.CedidoId);
 
         builder.HasOne(c => c.Trabalhador)
-               .WithMany(t => t.Cedidos)
-               .HasForeignKey(c => c.TrabalhadorId);
+               .WithOne(t => t.Cedido)
+               .HasForeignKey<Cedido>(c => c.TrabalhadorId);
     }
 }
 
