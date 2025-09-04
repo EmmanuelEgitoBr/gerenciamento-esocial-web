@@ -1,13 +1,13 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.DependenteCommand.AtualizarDependenteCommand;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.DependenteCommand.CriarDependenteCommand;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.DependenteCommand.RemoverDependenteCommand;
-using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Dtos;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.DependenteQuery.GetAllDependenteQuery;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.DependenteQuery.GetDependenteByIdQuery;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.DependenteQuery.GetDependentesByTrabalhadorIdQuery;
+using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.DependenteQuery.GetDependenteByTrabalhadorIdQuery;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
 {
@@ -57,7 +57,7 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
         [HttpGet("trabalhador/{id}")]
         public async Task<ActionResult<ApiResponse<IEnumerable<DependenteDto>>>> GetDependentesByTrabalhadorId(int id)
         {
-            var result = await _mediator.Send(new GetDependenteByTrabalhadorIdQuery { TrabalhadorId = id });
+            var result = await _mediator.Send(new GetDependentesByTrabalhadorIdQuery { TrabalhadorId = id });
 
             if (!result.Success) return BadRequest(result);
 

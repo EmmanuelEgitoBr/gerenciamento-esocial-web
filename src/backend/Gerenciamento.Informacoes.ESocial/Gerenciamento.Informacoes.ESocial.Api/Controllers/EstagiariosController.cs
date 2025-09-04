@@ -50,12 +50,12 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
         }
 
         /// <summary>
-        /// Retorna os estagiários pelo id do trabalhador
+        /// Retorna estagiário(a) pelo id do trabalhador
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("trabalhador/{id}")]
-        public async Task<ActionResult<ApiResponse<IEnumerable<EstagiarioDto>>>> GetEstagiariosBrTrabalhadorId(int id)
+        public async Task<ActionResult<ApiResponse<EstagiarioDto>>> GetEstagiariosBrTrabalhadorId(int id)
         {
             var result = await _mediator.Send(new GetEstagiarioByTrabalhadorIdQuery { TrabalhadorId = id });
 

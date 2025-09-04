@@ -8,11 +8,10 @@ namespace Gerenciamento.Informacoes.ESocial.Infra.Sql.Repositorios;
 
 public class CedidoRepository(AppDbContext db) : BaseRepository<Cedido>(db), ICedidoRepository
 {
-    public async Task<IEnumerable<Cedido>> GetCedidosByTrabalhadorIdAsync(int trabalhadorId)
+    public async Task<Cedido> GetCedidoByTrabalhadorIdAsync(int trabalhadorId)
     {
         return await db.Cedidos
             .AsNoTracking()
-            .Where(p => p.TrabalhadorId == trabalhadorId)
-            .ToListAsync();
+            .FirstAsync(p => p.TrabalhadorId == trabalhadorId);
     }
 }

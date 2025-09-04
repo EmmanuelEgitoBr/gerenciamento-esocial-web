@@ -5,5 +5,5 @@ namespace Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 
 public interface ICedidoRepository : IBaseRepository<Cedido>
 {
-    Task<IEnumerable<Cedido>> GetCedidosByTrabalhadorIdAsync(int trabalhadorId);
+    Task<Cedido> GetCedidoByTrabalhadorIdAsync(int trabalhadorId);
 }

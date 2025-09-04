@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.EstagiarioQuery.GetEstagiarioByTrabalhadorIdQuery;
 
-public class GetEstagiarioByTrabalhadorIdQueryHandler : IRequestHandler<GetEstagiarioByTrabalhadorIdQuery, ApiResponse<IEnumerable<EstagiarioDto>>>
+public class GetEstagiarioByTrabalhadorIdQueryHandler : IRequestHandler<GetEstagiarioByTrabalhadorIdQuery, ApiResponse<EstagiarioDto>>
 {
     private readonly IEstagiarioRepository _estagiarioRepository;
     private readonly IMapper _mapper;
@@ -18,21 +18,21 @@ public class GetEstagiarioByTrabalhadorIdQueryHandler : IRequestHandler<GetEstag
         _mapper = mapper;
     }
 
-    public async Task<ApiResponse<IEnumerable<EstagiarioDto>>> Handle(GetEstagiarioByTrabalhadorIdQuery request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<EstagiarioDto>> Handle(GetEstagiarioByTrabalhadorIdQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            var entity = await _estagiarioRepository.GetEstagiariosByTrabalhadorIdAsync(request.TrabalhadorId);
+            var entity = await _estagiarioRepository.GetEstagiarioByTrabalhadorIdAsync(request.TrabalhadorId);
 
-            if (entity == null) return new ApiResponse<IEnumerable<EstagiarioDto>>(false, null, "Estagiario(a) não encontrado(a)");
+            if (entity == null) return new ApiResponse<EstagiarioDto>(false, null, "Estagiario(a) não encontrado(a)");
 
-            var dto = _mapper.Map<IEnumerable<EstagiarioDto>>(entity);
+            var dto = _mapper.Map<EstagiarioDto>(entity);
 
-            return new ApiResponse<IEnumerable<EstagiarioDto>>(false, dto, null);
+            return new ApiResponse<EstagiarioDto>(false, dto, null);
         }
         catch (Exception ex)
         {
-            return new ApiResponse<IEnumerable<EstagiarioDto>>(false, null, ex.Message);
+            return new ApiResponse<EstagiarioDto>(false, null, ex.Message);
         }
     }
 }

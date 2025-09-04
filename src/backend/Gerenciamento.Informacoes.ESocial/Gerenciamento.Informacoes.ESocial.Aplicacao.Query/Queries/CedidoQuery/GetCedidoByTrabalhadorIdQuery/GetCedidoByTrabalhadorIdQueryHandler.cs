@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.CedidoQuery.GetCedidoByTrabalhadorIdQuery;
 
-public class GetCedidoByTrabalhadorIdQueryHandler : IRequestHandler<GetCedidoByTrabalhadorIdQuery, ApiResponse<IEnumerable<CedidoDto>>>
+public class GetCedidoByTrabalhadorIdQueryHandler : IRequestHandler<GetCedidoByTrabalhadorIdQuery, ApiResponse<CedidoDto>>
 {
     private readonly ICedidoRepository _cedidoRepository;
     private readonly IMapper _mapper;
@@ -18,21 +18,21 @@ public class GetCedidoByTrabalhadorIdQueryHandler : IRequestHandler<GetCedidoByT
         _mapper = mapper;
     }
 
-    public async Task<ApiResponse<IEnumerable<CedidoDto>>> Handle(GetCedidoByTrabalhadorIdQuery request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<CedidoDto>> Handle(GetCedidoByTrabalhadorIdQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            var entity = await _cedidoRepository.GetCedidosByTrabalhadorIdAsync(request.TrabalhadorId);
+            var entity = await _cedidoRepository.GetCedidoByTrabalhadorIdAsync(request.TrabalhadorId);
 
-            if(entity == null) return new ApiResponse<IEnumerable<CedidoDto>>(false, null, "Cedido(a) não encontrado(a)");
+            if(entity == null) return new ApiResponse<CedidoDto>(false, null, "Cedido(a) não encontrado(a)");
 
-            var dto = _mapper.Map<IEnumerable<CedidoDto>>(entity);
+            var dto = _mapper.Map<CedidoDto>(entity);
 
-            return new ApiResponse<IEnumerable<CedidoDto>>(false, dto, null);
+            return new ApiResponse<CedidoDto>(false, dto, null);
         }
         catch (Exception ex)
         {
-            return new ApiResponse<IEnumerable<CedidoDto>>(false, null, ex.Message);
+            return new ApiResponse<CedidoDto>(false, null, ex.Message);
         }
     }
 }

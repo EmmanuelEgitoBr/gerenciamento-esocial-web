@@ -8,11 +8,10 @@ namespace Gerenciamento.Informacoes.ESocial.Infra.Sql.Repositorios;
 
 public class EstagiarioRepository(AppDbContext db) : BaseRepository<Estagiario>(db), IEstagiarioRepository
 {
-    public async Task<IEnumerable<Estagiario>> GetEstagiariosByTrabalhadorIdAsync(int trabalhadorId)
+    public async Task<Estagiario> GetEstagiarioByTrabalhadorIdAsync(int trabalhadorId)
     {
         return await db.Estagiarios
             .AsNoTracking()
-            .Where(p => p.TrabalhadorId == trabalhadorId)
-            .ToListAsync();
+            .FirstAsync(p => p.TrabalhadorId == trabalhadorId);
     }
 }

@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.EstagiarioQuery.GetEstagiarioByTrabalhadorIdQuery;
 
-public class GetEstagiarioByTrabalhadorIdQuery : IRequest<ApiResponse<IEnumerable<EstagiarioDto>>>
+public class GetEstagiarioByTrabalhadorIdQuery : IRequest<ApiResponse<EstagiarioDto>>
 {
     public int TrabalhadorId { get; set; }
 }

@@ -50,12 +50,12 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
         }
 
         /// <summary>
-        /// Retorna cedidos pelo id do trabalhador
+        /// Retorna cedido(a) pelo id do trabalhador
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("trabalhador/{id}")]
-        public async Task<ActionResult<ApiResponse<IEnumerable<CedidoDto>>>> GetCedidosByTrabalhadorId(int id)
+        public async Task<ActionResult<ApiResponse<CedidoDto>>> GetCedidosByTrabalhadorId(int id)
         {
             var result = await _mediator.Send(new GetCedidoByTrabalhadorIdQuery { TrabalhadorId = id });
 

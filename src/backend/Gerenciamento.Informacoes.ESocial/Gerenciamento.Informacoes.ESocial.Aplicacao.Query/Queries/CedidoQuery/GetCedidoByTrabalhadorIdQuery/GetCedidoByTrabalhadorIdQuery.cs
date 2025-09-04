@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.CedidoQuery.GetCedidoByTrabalhadorIdQuery;
 
-public class GetCedidoByTrabalhadorIdQuery : IRequest<ApiResponse<IEnumerable<CedidoDto>>>
+public class GetCedidoByTrabalhadorIdQuery : IRequest<ApiResponse<CedidoDto>>
 {
     public int TrabalhadorId { get; set; }
 }
