@@ -7,6 +7,7 @@ using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery.GetTrabalhadorByIdQuery;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
 {
@@ -15,9 +16,13 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
     /// </summary>
     [Route("api/v1/trabalhadores")]
     [ApiController]
-    public class TrabalhadoresController(IMediator mediator) : ControllerBase
+    public class TrabalhadoresController(IMediator mediator,
+        ITrabalhadorService trabalhadorService,
+        IConfiguration configuration) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
+        private readonly ITrabalhadorService _trabalhadorService = trabalhadorService;
+        private readonly IConfiguration _configuration = configuration;
 
         /// <summary>
         /// Buscar todos os trabalhadors
@@ -94,11 +99,19 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
         }
 
         [HttpPost("{trabalhadorId}/atualizar-status")]
-        public IActionResult AtualizarStatusCadastro(int trabalhadorId, 
+        public async Task<ActionResult> AtualizarStatusCadastro(int trabalhadorId, 
             [FromQuery] int novoStatus,
             [FromBody] string? pendenciasCadastro)
         {
-            return Ok(trabalhadorId);
+            string queueName = _configuration["RabbitMq:QueueName"]!;
+            var result = await _trabalhadorService.PublicarMensagemMudancaStatus(trabalhadorId, 
+                novoStatus, 
+                pendenciasCadastro,
+                queueName);
+
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
         }
     }
 }

@@ -43,7 +43,7 @@ namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Utils
             strBody = strBody + "</body>";
             strBody = strBody + "</html>";
 
-            return string.Empty;
+            return strBody;
         }
     }
 }

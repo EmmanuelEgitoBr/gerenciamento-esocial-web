@@ -15,6 +15,7 @@ builder.Services.AddMediatorConfiguration();
 builder.Services.AddApplicationServices();
 builder.AddAuthConfiguration();
 builder.Services.AddSecurityInfrastructure(builder.Configuration);
+builder.Services.AddRabbitMqConfiguration();
 
 var app = builder.Build();
 

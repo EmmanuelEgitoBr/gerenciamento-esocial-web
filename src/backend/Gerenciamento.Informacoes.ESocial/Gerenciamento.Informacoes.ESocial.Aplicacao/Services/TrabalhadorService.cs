@@ -1,5 +1,6 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Models;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Resources.Constants;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Utils;
 using Gerenciamento.Informacoes.ESocial.Dominio.Enums;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
@@ -7,18 +8,22 @@ using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Services;
 
-public class TrabalhadorService
+public class TrabalhadorService : ITrabalhadorService
 {
     private readonly ITrabalhadorRepository _trabalhadorRepository;
+    private readonly IRabbitMqMessageSenderService _rabbitMqService;
 
-    public TrabalhadorService(ITrabalhadorRepository trabalhadorRepository)
+    public TrabalhadorService(ITrabalhadorRepository trabalhadorRepository,
+        IRabbitMqMessageSenderService rabbitMqService)
     {
         _trabalhadorRepository = trabalhadorRepository;
+        _rabbitMqService = rabbitMqService;
     }
 
     public async Task<ApiResponse<MessageModel>> PublicarMensagemMudancaStatus(int trabalhadorId, 
         int novoStatus, 
-        string? pendenciasCadastro)
+        string? pendenciasCadastro,
+        string queueName)
     {
         try
         {
@@ -39,7 +44,7 @@ public class TrabalhadorService
                 Email = emailModel
             };
 
-
+            await _rabbitMqService.SendMessageAsync(message, queueName);
 
             return new ApiResponse<MessageModel>(true, message, null);
         }
