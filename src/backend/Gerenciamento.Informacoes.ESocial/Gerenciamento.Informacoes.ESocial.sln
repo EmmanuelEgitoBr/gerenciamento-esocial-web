@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Infra.Messaging", "Gerenciamento.Informacoes.ESocial.Infra.Messaging\Gerenciamento.Informacoes.ESocial.Infra.Messaging.csproj", "{93950DD0-4C76-40AA-9E6B-BA614CE8EB5C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workers", "Workers", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gerenciamento.Informacoes.ESocial.Cadastro.Worker", "Gerenciamento.Informacoes.ESocial.Cadastro.Worker\Gerenciamento.Informacoes.ESocial.Cadastro.Worker.csproj", "{FA053AF0-5C1E-4C61-B140-F1C3C043475D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,9 +61,16 @@ Global
 		{93950DD0-4C76-40AA-9E6B-BA614CE8EB5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93950DD0-4C76-40AA-9E6B-BA614CE8EB5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93950DD0-4C76-40AA-9E6B-BA614CE8EB5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA053AF0-5C1E-4C61-B140-F1C3C043475D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA053AF0-5C1E-4C61-B140-F1C3C043475D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA053AF0-5C1E-4C61-B140-F1C3C043475D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA053AF0-5C1E-4C61-B140-F1C3C043475D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FA053AF0-5C1E-4C61-B140-F1C3C043475D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7784083F-718D-41E6-92D3-10BD98F7697D}

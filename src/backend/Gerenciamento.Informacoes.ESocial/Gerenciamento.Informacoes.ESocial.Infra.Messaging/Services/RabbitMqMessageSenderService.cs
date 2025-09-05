@@ -1,4 +1,4 @@
-﻿using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Messaging;
+﻿using Gerenciamento.Informacoes.ESocial.Infra.Messaging.Interfaces;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;

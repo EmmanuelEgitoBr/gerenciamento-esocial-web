@@ -1,4 +1,4 @@
-﻿using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Messaging;
+﻿using Gerenciamento.Informacoes.ESocial.Infra.Messaging.Interfaces;
 using RabbitMQ.Client;
 
 namespace Gerenciamento.Informacoes.ESocial.Infra.Messaging.Connections;

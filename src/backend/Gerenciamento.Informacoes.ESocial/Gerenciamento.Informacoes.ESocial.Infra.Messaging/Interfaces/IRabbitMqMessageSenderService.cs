@@ -1,4 +1,4 @@
-﻿namespace Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Messaging;
+﻿namespace Gerenciamento.Informacoes.ESocial.Infra.Messaging.Interfaces;
 
 public interface IRabbitMqMessageSenderService
 {
