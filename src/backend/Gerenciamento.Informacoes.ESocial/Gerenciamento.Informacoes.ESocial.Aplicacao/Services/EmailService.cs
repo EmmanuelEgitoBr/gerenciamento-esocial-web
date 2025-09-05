@@ -33,7 +33,7 @@ public class EmailService : IEmailService
             using var client = new SmtpClient();
             await client.ConnectAsync(_settings.Host, _settings.Port, MailKit.Security.SecureSocketOptions.StartTls);
             await client.AuthenticateAsync(_settings.Username, _settings.Password);
-            await client.SendAsync(message);
+            var result = await client.SendAsync(message);
             await client.DisconnectAsync(true);
 
             return new ApiResponse<string>(true, email.To, null);
