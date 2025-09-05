@@ -1,4 +1,5 @@
 using Gerenciamento.Informacoes.ESocial.Cadastro.Worker.Clients;
+using Gerenciamento.Informacoes.ESocial.Cadastro.Worker.Dtos.Enums;
 using Gerenciamento.Informacoes.ESocial.Cadastro.Worker.Dtos.Messaging;
 using Gerenciamento.Informacoes.ESocial.Cadastro.Worker.Dtos.ProcessoLogs;
 using Gerenciamento.Informacoes.ESocial.Cadastro.Worker.Settings;
@@ -27,9 +28,9 @@ public class Worker(ILogger<Worker> logger,
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _rabbitConnection = await _connection.GetConnectionAsync();
-        var channel = await _rabbitConnection.CreateChannelAsync();
+        _channel = await _rabbitConnection.CreateChannelAsync();
 
-        await channel.QueueDeclareAsync(
+        await _channel.QueueDeclareAsync(
             queue: _queueName,
             durable: true,
             exclusive: false,
@@ -37,8 +38,9 @@ public class Worker(ILogger<Worker> logger,
             arguments: null
             );
 
-        var consumer = new AsyncEventingBasicConsumer(channel);
+        _logger.LogInformation("Worker iniciado. Aguardando mensagens na fila '{QueueName}'...", _queueName);
 
+        var consumer = new AsyncEventingBasicConsumer(_channel);
         consumer.ReceivedAsync += async (ch, ea) =>
         {
             try
@@ -47,34 +49,46 @@ public class Worker(ILogger<Worker> logger,
                 var messageJson = Encoding.UTF8.GetString(body);
                 var message = JsonSerializer.Deserialize<MessageModel>(messageJson);
 
-                if(message  == null)
+                if (message == null || message.TrabalhadorId <= 0)
                 {
-                    _logger.LogWarning("Mensagem recebida foi nula!");
+                    //_logger.LogInformation("Channel aberto: {IsOpen}, Connection aberto: {ConnOpen}", _channel.IsOpen, _rabbitConnection.IsOpen);
+                    _logger.LogWarning("Mensagem inválida recebida: {Message}", messageJson);
+                    await _channel!.BasicAckAsync(ea.DeliveryTag, false);
                     return;
                 }
 
                 bool emailEnviado = false;
                 string? erroEnvio = null;
 
+                
+                _logger.LogInformation("Processando mensagem para TrabalhadorId {Id}", message.TrabalhadorId);
+
                 var response = await _emailApiClient.SendEmailAsync(message.Email!);
                 emailEnviado = response.Success;
 
                 if (!emailEnviado) erroEnvio = response.ErrorMessage;
 
-                var logStatus = new LogStatusCadastro
+                var logStatus = new CriarLogStatusCadastroCommand
                 {
                     TrabalhadorId = message.TrabalhadorId,
                     EmailTrabalhador = message.EmailTrabalhador,
                     IsEmailEnviado = emailEnviado,
-                    StatusCadastro = message.StatusCadastro,
+                    StatusCadastro = (int)message.StatusCadastro,
                     Pendencias = message.Pendencias
                 };
 
-                await _processosApiClient.RegistrarLogStatusAsync(logStatus);
+                var logStatusResult = await _processosApiClient.RegistrarLogStatusAsync(logStatus);
+
+                if (!logStatusResult.Success)
+                {
+                    _logger.LogWarning("Mensagem inválida recebida: {Message}", messageJson);
+                    await _channel!.BasicAckAsync(ea.DeliveryTag, false);
+                    return;
+                }
 
                 if (!emailEnviado)
                 {
-                    var logEnvioEmail = new LogEnvioEmail
+                    var logEnvioEmail = new CriarLogEnvioEmailCommand
                     {
                         TrabalhadorId = message.TrabalhadorId,
                         EmailTrabalhador = message.EmailTrabalhador,
@@ -93,5 +107,10 @@ public class Worker(ILogger<Worker> logger,
         };
 
         await _channel!.BasicConsumeAsync(queue: _queueName, autoAck: false, consumer: consumer);
+
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            await Task.Delay(1000, stoppingToken);
+        }
     }
 }

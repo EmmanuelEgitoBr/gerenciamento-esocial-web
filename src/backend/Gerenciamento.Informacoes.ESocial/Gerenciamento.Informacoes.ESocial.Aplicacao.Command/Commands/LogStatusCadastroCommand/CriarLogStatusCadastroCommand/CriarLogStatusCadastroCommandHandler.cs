@@ -1,4 +1,5 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Cadastro;
+using Gerenciamento.Informacoes.ESocial.Dominio.Enums;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using MediatR;
@@ -23,7 +24,7 @@ public class CriarLogStatusCadastroCommandHandler : IRequestHandler<CriarLogStat
                 TrabalhadorId = request.TrabalhadorId,
                 EmailTrabalhador = request.EmailTrabalhador,
                 IsEmailEnviado = request.IsEmailEnviado,
-                StatusCadastro = request.StatusCadastro,
+                StatusCadastro = (StatusCadastro)request.StatusCadastro,
                 Pendencias = request.Pendencias,
                 DataEventoLog = DateTime.Now
             };

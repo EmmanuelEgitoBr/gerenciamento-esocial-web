@@ -1,7 +1,7 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Infra.Messaging.Interfaces;
-using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
+using System.Text.Json;
 
 namespace Gerenciamento.Informacoes.ESocial.Infra.Messaging.Services;
 
@@ -27,7 +27,7 @@ public class RabbitMqMessageSenderService : IRabbitMqMessageSenderService
             arguments: null
         );
 
-        var json = JsonConvert.SerializeObject(message);
+        var json = JsonSerializer.Serialize(message);
         var body = Encoding.UTF8.GetBytes(json);
 
         await channel.BasicPublishAsync(
