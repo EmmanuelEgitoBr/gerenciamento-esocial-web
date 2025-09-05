@@ -1,33 +1,22 @@
-﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
+﻿using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Messaging;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
 
-namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Messaging;
+namespace Gerenciamento.Informacoes.ESocial.Infra.Messaging.Services;
 
 public class RabbitMqMessageSenderService : IRabbitMqMessageSenderService
 {
-    private readonly string _hostName;
-    private readonly string _username;
-    private readonly string _password;
+    private readonly IRabbitMqConnection _connection;
 
-    public RabbitMqMessageSenderService()
+    public RabbitMqMessageSenderService(IRabbitMqConnection connection)
     {
-        _hostName = "localhost";
-        _username = "guest";
-        _password = "guest";
+        _connection = connection;
     }
 
     public async Task SendMessageAsync(object message, string queueName)
     {
-        var factory = new ConnectionFactory
-        {
-            HostName = _hostName,
-            UserName = _username,
-            Password = _password
-        };
-
-        await using var connection = await factory.CreateConnectionAsync();
+        await using var connection = await _connection.GetConnectionAsync();
         await using var channel = await connection.CreateChannelAsync();
 
         await channel.QueueDeclareAsync(

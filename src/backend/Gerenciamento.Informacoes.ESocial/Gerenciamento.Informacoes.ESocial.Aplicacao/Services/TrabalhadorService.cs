@@ -4,6 +4,7 @@ using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Utils;
 using Gerenciamento.Informacoes.ESocial.Dominio.Enums;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
+using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Messaging;
 using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 
 namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Services;

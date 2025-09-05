@@ -3,11 +3,13 @@ using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.TrabalhadorCommand.Cri
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery.GetTrabalhadorByIdQuery;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Messaging;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Settings;
 using Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Auth;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Base;
+using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Messaging;
+using Gerenciamento.Informacoes.ESocial.Infra.Messaging.Connections;
+using Gerenciamento.Informacoes.ESocial.Infra.Messaging.Services;
 using Gerenciamento.Informacoes.ESocial.Infra.Sql.Context;
 using Gerenciamento.Informacoes.ESocial.Infra.Sql.Repositorios;
 using Gerenciamento.Informacoes.ESocial.Infra.Sql.Repositorios.Base;
@@ -18,7 +20,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using RabbitMQ.Client;
 using System.Text;
 
 namespace Gerenciamento.Informacoes.ESocial.CrossCutting.IoC;
@@ -118,15 +119,17 @@ public static class DependencyInjection
         });
     }
 
-    public static void AddRabbitMqConfiguration(this IServiceCollection services)
+    public static void AddRabbitMqConfiguration(this IServiceCollection services,
+        IConfiguration configuration)
     {
+        var rabbitConfig = configuration.GetSection("RabbitMq");
+        services.AddSingleton<IRabbitMqConnection>(sp =>
+                new RabbitMqConnection(
+                    rabbitConfig["HostName"]!,
+                    rabbitConfig["UserName"]!,
+                    rabbitConfig["Password"]!
+                ));
         services.AddScoped<IRabbitMqMessageSenderService, RabbitMqMessageSenderService>();
-        services.AddSingleton(new ConnectionFactory
-        {
-            HostName = "localhost",
-            UserName = "guest",
-            Password = "guest"
-        });
     }
 
     public static void AddEmailConfiguration(this WebApplicationBuilder builder)
