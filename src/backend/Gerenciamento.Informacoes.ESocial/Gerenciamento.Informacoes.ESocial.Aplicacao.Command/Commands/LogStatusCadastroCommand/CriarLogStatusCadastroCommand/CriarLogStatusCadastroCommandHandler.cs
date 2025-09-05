@@ -22,7 +22,7 @@ public class CriarLogStatusCadastroCommandHandler : IRequestHandler<CriarLogStat
             {
                 TrabalhadorId = request.TrabalhadorId,
                 EmailTrabalhador = request.EmailTrabalhador,
-                IsEmailRecebido = request.IsEmailRecebido,
+                IsEmailEnviado = request.IsEmailEnviado,
                 StatusCadastro = request.StatusCadastro,
                 Pendencias = request.Pendencias,
                 DataEventoLog = DateTime.Now

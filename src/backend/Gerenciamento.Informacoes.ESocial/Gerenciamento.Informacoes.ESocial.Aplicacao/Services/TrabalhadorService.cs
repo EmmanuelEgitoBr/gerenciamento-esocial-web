@@ -39,7 +39,6 @@ public class TrabalhadorService : ITrabalhadorService
             {
                 TrabalhadorId = trabalhadorId,
                 EmailTrabalhador = emailTrabalhador,
-                IsEmailRecebido = false,
                 StatusCadastro = (StatusCadastro)novoStatus,
                 Pendencias = pendenciasCadastro,
                 Email = emailModel

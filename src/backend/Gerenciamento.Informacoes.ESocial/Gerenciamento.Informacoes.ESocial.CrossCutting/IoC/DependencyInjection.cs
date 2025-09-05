@@ -5,6 +5,7 @@ using Gerenciamento.Informacoes.ESocial.Aplicacao.Services;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Settings;
 using Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Auth;
+using Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Cadastro;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Base;
 using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces.Messaging;
@@ -51,6 +52,7 @@ public static class DependencyInjection
         services.AddScoped<IEstagiarioRepository, EstagiarioRepository>();
         services.AddScoped<ITrabalhadorRepository, TrabalhadorRepository>();
         services.AddScoped<ILogStatusCadastroRepository, LogStatusCadastroRepository>();
+        services.AddScoped<ILogEnvioEmailRepository, LogEnvioEmailRepository>();
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
         services.AddScoped<ITrabalhadorService, TrabalhadorService>();

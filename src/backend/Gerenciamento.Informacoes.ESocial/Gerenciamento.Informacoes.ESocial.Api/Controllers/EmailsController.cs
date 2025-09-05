@@ -1,5 +1,6 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Models;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
+using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
@@ -16,7 +17,7 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("send-email")]
-        public async Task<ActionResult> EnviarEmailConfirmacao([FromBody] EmailModel model)
+        public async Task<ActionResult<ApiResponse<string>>> EnviarEmailConfirmacao([FromBody] EmailModel model)
         {
             var result = await _emailService.SendEmailAsync(model);
 

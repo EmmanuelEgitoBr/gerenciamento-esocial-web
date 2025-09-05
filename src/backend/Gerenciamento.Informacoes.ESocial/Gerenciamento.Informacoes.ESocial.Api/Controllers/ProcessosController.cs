@@ -1,4 +1,5 @@
-﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.Commands.LogStatusCadastroCommand.CriarLogStatusCadastroCommand;
+﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.Commands.LogEnvioEmailCommand.CriarLogEnvioEmailCommand;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.Commands.LogStatusCadastroCommand.CriarLogStatusCadastroCommand;
 using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,21 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
         /// <returns></returns>
         [HttpPost("log-status-cadastro")]
         public async Task<ActionResult<ApiResponse<int>>> SalvarLogStatusCadastro([FromBody] CriarLogStatusCadastroCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            if (!result.Success) return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Endpoint que salva os logs de erro de envio de email
+        /// </summary>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        [HttpPost("log-envio-email")]
+        public async Task<ActionResult<ApiResponse<int>>> SalvarLogEnvioEmail([FromBody] CriarLogEnvioEmailCommand command)
         {
             var result = await _mediator.Send(command);
 

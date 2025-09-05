@@ -18,6 +18,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Estagiario> Estagiarios { get; set; }
     public DbSet<Trabalhador> Trabalhadores { get; set; }
     public DbSet<LogStatusCadastro> LogStatusCadastros { get; set; }
+    public DbSet<LogEnvioEmail> LogEnvioEmails { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
