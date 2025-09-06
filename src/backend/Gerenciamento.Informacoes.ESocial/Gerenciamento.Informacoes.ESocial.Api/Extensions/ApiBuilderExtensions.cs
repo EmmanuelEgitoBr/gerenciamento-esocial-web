@@ -51,6 +51,12 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Extensions
                         new string[] {}
                     }
                 });
+                options.SupportNonNullableReferenceTypes();
+                options.MapType<IFormFile>(() => new Microsoft.OpenApi.Models.OpenApiSchema
+                {
+                    Type = "string",
+                    Format = "binary"
+                });
             });
         }
 

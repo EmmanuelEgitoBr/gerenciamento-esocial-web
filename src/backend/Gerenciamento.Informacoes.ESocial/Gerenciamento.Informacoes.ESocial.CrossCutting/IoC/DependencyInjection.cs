@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Mappings;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.TrabalhadorCommand.CriarTrabalhadorCommand;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery.GetTrabalhadorByIdQuery;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services;
@@ -41,6 +42,10 @@ public static class DependencyInjection
         IMapper mapper = Aplicacao.Query.Mappings.MappingConfiguration.RegisterMap().CreateMapper();
         services.AddScoped<IMapper>(_ => mapper);
         services.AddAutoMapper(typeof(Aplicacao.Query.Mappings.MappingConfiguration));
+
+        IMapper autoMapper = MapConfiguration.RegisterMap().CreateMapper();
+        services.AddScoped<IMapper>(_ => autoMapper);
+        services.AddAutoMapper(typeof(MapConfiguration));
     }
 
     public static void AddApplicationServices(this IServiceCollection services)
@@ -54,6 +59,7 @@ public static class DependencyInjection
         services.AddScoped<ILogEnvioEmailRepository, LogEnvioEmailRepository>();
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
+        services.AddScoped<IArquivoService, ArquivoService>();
         services.AddScoped<ITrabalhadorService, TrabalhadorService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUserRepository, UserRepository>();

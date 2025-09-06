@@ -10,7 +10,6 @@ public class MappingConfiguration
     {
         var mapperConfiguration = new MapperConfiguration(config =>
         {
-            config.CreateMap<Arquivo, ArquivoDto>().ReverseMap();
             config.CreateMap<Cedido, CedidoDto>().ReverseMap();
             config.CreateMap<Dependente, DependenteDto>().ReverseMap();
             config.CreateMap<Estagiario, EstagiarioDto>().ReverseMap();
