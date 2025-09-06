@@ -24,7 +24,7 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    [HttpPost("Login")]
+    [HttpPost("login")]
     public async Task<ActionResult<ApiResponse<LoginResponseModel>>> Login([FromBody] LoginModel model)
     {
         var result = await _authService.LoginAsync(model);
@@ -39,7 +39,7 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="model"></param>
     /// <returns></returns>
-    [HttpPost("Register")]
+    [HttpPost("register")]
     public async Task<ActionResult<ResponseModel>> Register([FromBody] RegisterModel model)
     {
         var result = await _authService.RegistrarUsuarioAsync(model);
@@ -55,7 +55,7 @@ public class AuthController : ControllerBase
     /// <param name="tokenModel"></param>
     /// <returns></returns>
     /// <exception cref="ArgumentNullException"></exception>
-    [HttpPost("Refresh-Token")]
+    [HttpPost("refresh-token")]
     public async Task<ActionResult<ApiResponse<TokenModel>>> RefreshToken(TokenModel tokenModel)
     {
         var result = await _authService.RefreshTokenAsync(tokenModel);
@@ -71,7 +71,7 @@ public class AuthController : ControllerBase
     /// <param name="username"></param>
     /// <returns></returns>
     [Authorize]
-    [HttpPost("Revoke/{username}")]
+    [HttpPost("revoke/{username}")]
     [Authorize(Policy = "ExclusiveOnly")]
     public async Task<ActionResult<ResponseModel>> Revoke(string username)
     {
@@ -90,9 +90,9 @@ public class AuthController : ControllerBase
     /// </summary>
     /// <param name="roleName"></param>
     /// <returns></returns>
-    [HttpPost("CreateRole")]
+    [HttpPost("create-role")]
     [Authorize(Policy = "SuperAdminOnly")]
-    public async Task<ActionResult<ResponseModel>> CreateRole(string roleName)
+    public async Task<ActionResult<ResponseModel>> CreateRole([FromBody] string roleName)
     {
         var result = await _authService.CreateRoleAsync(roleName);
 
@@ -107,9 +107,9 @@ public class AuthController : ControllerBase
     /// <param name="userIdentifier"></param>
     /// <param name="roleName"></param>
     /// <returns></returns>
-    [HttpPost("AddUserToRole")]
+    [HttpPost("add-user-to-role")]
     [Authorize(Policy = "SuperAdminOnly")]
-    public async Task<ActionResult<ResponseModel>> AddUserToRole(string userIdentifier, string roleName)
+    public async Task<ActionResult<ResponseModel>> AddUserToRole([FromBody]string userIdentifier, [FromQuery]string roleName)
     {
         var result = await _authService.AddUserToRoleAsync(userIdentifier, roleName);
 
