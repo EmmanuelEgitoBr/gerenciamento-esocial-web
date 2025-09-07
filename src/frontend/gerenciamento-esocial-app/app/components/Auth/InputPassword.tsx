@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react'
 
 export const InputPassword: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = (props) => {

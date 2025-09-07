@@ -1,9 +1,7 @@
-"use client";
-
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useAuth } from '../context/AuthProvider'
-import { InputPassword } from '../app/components/Auth/InputPassword'
+import { useRouter } from 'next/router'
+import { useAuth } from '../context/AuthContext'
+import { InputPassword } from '../components/Auth/InputPassword'
 
 export default function LoginPage() {
   const { login } = useAuth()
