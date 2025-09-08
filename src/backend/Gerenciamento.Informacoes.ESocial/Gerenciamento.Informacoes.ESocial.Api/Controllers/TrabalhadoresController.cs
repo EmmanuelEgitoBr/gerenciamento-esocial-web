@@ -8,6 +8,7 @@ using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery.GetTrabalhadorByUserIdQuery;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
 {
@@ -50,6 +51,19 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
 
             if (!result.Success) return BadRequest(result);
 
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Endpoint para buscar trabalhador pelo Id do usuário no sistema de autenticação
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<ApiResponse<TrabalhadorDto>>> GetTrabalhadorByUserId(string userId)
+        {
+            var result = await _mediator.Send(new GetTrabalhadorByUserIdQuery(userId));
+            if (!result.Success) return BadRequest(result);
             return Ok(result);
         }
 

@@ -6,6 +6,7 @@ namespace Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
 public class Trabalhador
 {
     public int TrabalhadorId { get; set; }
+    public string? UserId { get; set; }
     public TipoVinculo Tipo { get; set; }
     public string? Nome { get; set; }
     public Sexo Sexo { get; set; }

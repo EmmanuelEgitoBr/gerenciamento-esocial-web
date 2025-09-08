@@ -1,41 +1,34 @@
-﻿using AutoMapper;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Dtos;
-using Gerenciamento.Informacoes.ESocial.Dominio.Models;
-using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
-using MediatR;
+﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Dtos;
 using Gerenciamento.Informacoes.ESocial.Dominio.Entidades;
+using Gerenciamento.Informacoes.ESocial.Dominio.Interfaces;
+using Gerenciamento.Informacoes.ESocial.Dominio.Models;
+using MediatR;
 
-namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery.GetAllTrabalhadorQuery;
+namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery.GetTrabalhadorByUserIdQuery;
 
-public class GetAllTrabalhadorQueryHandler : IRequestHandler<GetAllTrabalhadorQuery, ApiResponse<IEnumerable<TrabalhadorDto>>>
+public class GetTrabalhadorByUserIdQueryHandler : IRequestHandler<GetTrabalhadorByUserIdQuery, ApiResponse<TrabalhadorDto>>
 {
-    private readonly IMapper _mapper;
     private readonly ITrabalhadorRepository _trabalhadorRepository;
 
-    public GetAllTrabalhadorQueryHandler(IMapper mapper, ITrabalhadorRepository trabalhadorRepository)
+    public GetTrabalhadorByUserIdQueryHandler(ITrabalhadorRepository trabalhadorRepository)
     {
-        _mapper = mapper;
         _trabalhadorRepository = trabalhadorRepository;
     }
 
-    public async Task<ApiResponse<IEnumerable<TrabalhadorDto>>> Handle(GetAllTrabalhadorQuery request, CancellationToken cancellationToken)
+    public async Task<ApiResponse<TrabalhadorDto>> Handle(GetTrabalhadorByUserIdQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            var entityList = await _trabalhadorRepository.GetAllAsync();
-            List<TrabalhadorDto> dtoList = new List<TrabalhadorDto>();
+            var entity = await _trabalhadorRepository.GetTrabalhadorByUserIdAsync(request.UserId);
 
-            foreach (var item in entityList)
-            {
-                var dto = CriarTrabalhadorDto(item);
-                dtoList.Add(dto);
-            }
+            if (entity == null) return new ApiResponse<TrabalhadorDto>(false, null, "Trabalhador(a) não encontrado(a)");
 
-            return new ApiResponse<IEnumerable<TrabalhadorDto>>(true, dtoList, null);
+            var dto = CriarTrabalhadorDto(entity);
+            return new ApiResponse<TrabalhadorDto>(true, dto, null);
         }
         catch (Exception ex)
         {
-            return new ApiResponse<IEnumerable<TrabalhadorDto>>(false, null, ex.Message);
+            return new ApiResponse<TrabalhadorDto>(false, null, ex.Message);
         }
     }
 

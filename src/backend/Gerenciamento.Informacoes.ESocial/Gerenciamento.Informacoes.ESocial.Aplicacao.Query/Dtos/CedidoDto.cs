@@ -14,5 +14,4 @@ public class CedidoDto
     public TipoRegimePrevidenciario TipoRegPrev { get; set; }
     public OnusCessaoRequisicao OnusCessReq { get; set; }
     public CategoriaTrabalhador Categoria { get; set; }
-    public Trabalhador? Trabalhador { get; set; }
 }

@@ -10,10 +10,43 @@ public class MappingConfiguration
     {
         var mapperConfiguration = new MapperConfiguration(config =>
         {
-            config.CreateMap<Cedido, CedidoDto>().ReverseMap();
-            config.CreateMap<Dependente, DependenteDto>().ReverseMap();
-            config.CreateMap<Estagiario, EstagiarioDto>().ReverseMap();
-            config.CreateMap<Trabalhador, TrabalhadorDto>().ReverseMap();
+            #region Trabalhador
+
+            config.CreateMap<Trabalhador, TrabalhadorDto>();
+
+            config.CreateMap<TrabalhadorDto, Trabalhador>()
+            .ForMember(dest => dest.Dependentes, opt => opt.Ignore())
+            .ForMember(dest => dest.Estagiario, opt => opt.Ignore())
+            .ForMember(dest => dest.Cedido, opt => opt.Ignore());
+
+            #endregion
+
+            #region Cedido
+
+            config.CreateMap<Cedido, CedidoDto>();
+
+            config.CreateMap<CedidoDto, Cedido>()
+            .ForMember(dest => dest.Trabalhador, opt => opt.Ignore());
+
+            #endregion
+
+            #region Dependente
+
+            config.CreateMap<Dependente, DependenteDto>();
+
+            config.CreateMap<DependenteDto, Dependente>()
+            .ForMember(dest => dest.Trabalhador, opt => opt.Ignore());
+
+            #endregion
+
+            #region Estagiario
+
+            config.CreateMap<Estagiario, EstagiarioDto>();
+
+            config.CreateMap<EstagiarioDto, Estagiario>()
+            .ForMember(dest => dest.Trabalhador, opt => opt.Ignore());
+
+            #endregion
         }
         );
         return mapperConfiguration;

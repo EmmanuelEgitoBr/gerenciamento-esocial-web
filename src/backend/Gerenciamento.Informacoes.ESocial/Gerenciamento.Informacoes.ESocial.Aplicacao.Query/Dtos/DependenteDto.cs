@@ -13,6 +13,4 @@ public class DependenteDto
     public bool EhDependentePensao { get; set; }
     public string? Responsavel { get; set; }
     public string? TelefoneResponsavel { get; set; }
-
-    public TrabalhadorDto? Trabalhador { get; set; }
 }

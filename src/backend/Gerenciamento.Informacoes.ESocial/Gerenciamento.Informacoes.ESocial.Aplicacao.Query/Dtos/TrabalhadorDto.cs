@@ -6,6 +6,7 @@ namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Dtos;
 public class TrabalhadorDto
 {
     public int TrabalhadorId { get; set; }
+    public string? UserId { get; set; }
     public TipoVinculo Tipo { get; set; }
     public string? Nome { get; set; }
     public Sexo Sexo { get; set; }
@@ -29,7 +30,4 @@ public class TrabalhadorDto
     public StatusCadastro StatusCadastro { get; set; }
     public DateTime DataCadastro { get; set; } = DateTime.Now;
     public DateTime? DataUltimaAtualizacao { get; set; }
-    public ICollection<DependenteDto>? Dependentes { get; set; }
-    public EstagiarioDto? Estagiarios { get; set; }
-    public CedidoDto? Cedidos { get; set; }
 }

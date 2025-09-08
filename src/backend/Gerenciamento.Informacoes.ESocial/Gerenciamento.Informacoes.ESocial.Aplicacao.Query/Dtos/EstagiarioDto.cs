@@ -13,5 +13,4 @@ public class EstagiarioDto
     public string? CnpjInstEnsino { get; set; }
     public string? NomeSupervisor { get; set; }
     public Endereco? EnderecoInstEnsino { get; set; }
-    public TrabalhadorDto? Trabalhador { get; set; }
 }
