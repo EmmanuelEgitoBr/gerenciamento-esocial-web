@@ -14,6 +14,7 @@ builder.Services.AddAutoMapperConfiguration();
 builder.Services.AddMediatorConfiguration();
 builder.Services.AddApplicationServices();
 builder.AddAuthConfiguration();
+builder.AddCorsConfiguration();
 builder.Services.AddSecurityInfrastructure(builder.Configuration);
 builder.Services.AddRabbitMqConfiguration(builder.Configuration);
 builder.AddEmailConfiguration();
@@ -29,6 +30,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("FrontendLocalhost");
 
 app.UseAuthorization();
 

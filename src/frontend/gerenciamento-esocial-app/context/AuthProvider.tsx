@@ -1,42 +1,40 @@
-"use client"; // importante: habilita hooks no App Router
+"use client";
 
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const API = process.env.NEXT_PUBLIC_API_BASE;
 const AuthContext = createContext<any>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<any>(null);
-  const [token, setToken] = useState<string | null>(null);
 
-  useEffect(() => {
-    const t = Cookies.get("token");
-    const u = Cookies.get("user");
-    if (t) setToken(t);
-    if (u) setUser(JSON.parse(u));
-  }, []);
+  const login = async (inputvalue: string, password: string) => {
+    const res = await axios.post(
+      `${API}/auth/login`,
+      { inputvalue, password },
+      { withCredentials: true } // importantíssimo
+    );
 
-  const login = async (username: string, password: string) => {
-    const res = await axios.post(`${API}/auth/login`, { username, password }, { withCredentials: true });
-    const { token, user } = res.data;
-    Cookies.set("token", token);
-    Cookies.set("user", JSON.stringify(user));
-    setToken(token);
-    setUser(user);
-    return user;
+    console.log(res.data);
+
+    // Se o back mandar `user` no body, você pode setar no estado:
+    if (res.data.result) {
+      setUser(res.data.result.userid);
+    }
+    console.log('UserId: ', user);
+    return res.data.result.userid;
   };
 
-  const logout = () => {
-    Cookies.remove("token");
-    Cookies.remove("user");
+  const logout = async () => {
+    // Se o back tiver endpoint de logout, chama aqui
+    await axios.post(`${API}/auth/logout`, {}, { withCredentials: true });
+
     setUser(null);
-    setToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

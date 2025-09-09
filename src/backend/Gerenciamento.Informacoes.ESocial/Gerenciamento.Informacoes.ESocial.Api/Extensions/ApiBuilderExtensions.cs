@@ -65,5 +65,20 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Extensions
             builder.Services.AddScoped<ITokenService, TokenService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
         }
+
+        public static void AddCorsConfiguration(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("FrontendLocalhost", policy =>
+                {
+                    policy
+                        .WithOrigins("http://localhost:3000") // obrigatoriamente a origem do front
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials(); // importante para cookies
+                });
+            });
+        }
     }
 }
