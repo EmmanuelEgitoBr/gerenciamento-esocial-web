@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useEffect, useState } from 'react'
-import { NavBar } from '../../components/NavBar/NavBar'
-import { useAuth } from '../../context/AuthContext'
-import { getTrabalhadores } from '../../lib/api'
+import { NavBar } from '../components/NavBar/NavBar'
+import { useAuth } from '../../context/AuthProvider'
+import { getTrabalhadores } from '../lib/api'
 import Link from 'next/link'
 
 export default function Dashboard() {

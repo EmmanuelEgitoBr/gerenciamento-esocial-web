@@ -8,6 +8,7 @@ export const downloadPdfFile = (id: number) => `${API}/arquivos/download-pdf/${i
 export const uploadFileUrl = (trabalhadorId: number) => `${API}/arquivos/${trabalhadorId}/upload`
 
 export const getTrabalhadores = (page = 1, pageSize = 10) => api.get(`/trabalhadores?page=${page}&pageSize=${pageSize}`)
+export const getTrabalhadorByUserId = (id: string) => api.get(`/trabalhadores/user/${id}`)
 export const getTrabalhadorById = (id: number) => api.get(`/trabalhadores/${id}`)
 export const createTrabalhador = (payload: any) => api.post(`/trabalhadores/create`, payload)
 export const updateTrabalhador = (payload: any) => api.put(`/trabalhadores/update`, payload)
