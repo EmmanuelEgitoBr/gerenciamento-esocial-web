@@ -3,6 +3,7 @@ using Gerenciamento.Informacoes.ESocial.Api.Services.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers;
 
@@ -30,6 +31,22 @@ public class AuthController : ControllerBase
         var result = await _authService.LoginAsync(model);
 
         if (!result.Success) return Unauthorized();
+
+        Response.Cookies.Append("access_token", result.Result!.Token!, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = result.Result.Expiration
+        });
+
+        Response.Cookies.Append("user_id", result.Result.UserId!, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = result.Result.Expiration
+        });
 
         return Ok(result);
     }

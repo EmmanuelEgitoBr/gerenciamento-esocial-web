@@ -72,6 +72,7 @@ public class AuthService : IAuthService
 
             var responseModel = new LoginResponseModel
             {
+                UserId = user.Id,
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
                 RefreshToken = refreshToken,
                 Expiration = token.ValidTo
