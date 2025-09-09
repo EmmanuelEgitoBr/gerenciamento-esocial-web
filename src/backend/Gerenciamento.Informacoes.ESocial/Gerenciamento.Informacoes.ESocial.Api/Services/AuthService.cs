@@ -1,4 +1,5 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Api.Models.Auth;
+using Gerenciamento.Informacoes.ESocial.Api.Resources;
 using Gerenciamento.Informacoes.ESocial.Api.Services.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Api.Utils;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
@@ -100,7 +101,7 @@ public class AuthService : IAuthService
             {
                 IsSuccess = false,
                 Status = HttpStatusCode.BadRequest.ToString(),
-                Message = "Usuário já existe!"
+                Message = ResponseModelConstants.UserAlreadyExists
             };
         }
 
@@ -118,16 +119,16 @@ public class AuthService : IAuthService
             return new ResponseModel
             {
                 IsSuccess = false,
-                Status = "Error",
-                Message = "Falha na criação de usuário!"
+                Status = ResponseModelConstants.Error,
+                Message = ResponseModelConstants.UserNotCraeted
             };
         }
 
         return new ResponseModel
         {
             IsSuccess = true,
-            Status = "Success",
-            Message = "Usuário criado com sucesso!"
+            Status = ResponseModelConstants.Success,
+            Message = ResponseModelConstants.UserCreated
         };
     }
 
@@ -150,7 +151,7 @@ public class AuthService : IAuthService
         if (principal != null) return new ApiResponse<TokenModel>
         {
             Success = false,
-            ErrorMessage = "Invalid access/refresh token"
+            ErrorMessage = ResponseModelConstants.InvalidToken
         };
         
         string userName = principal!.Identity!.Name!;
@@ -164,7 +165,7 @@ public class AuthService : IAuthService
             return new ApiResponse<TokenModel>
             {
                 Success = false,
-                ErrorMessage = "Invalid access/refresh token"
+                ErrorMessage = ResponseModelConstants.InvalidToken
             };
         }
 
@@ -194,7 +195,7 @@ public class AuthService : IAuthService
         if (user == null) return new ResponseModel
         {
             IsSuccess = false,
-            Message = "Invalid user name"
+            Message = ResponseModelConstants.InvalidCredentials
         };
 
         user.RefreshToken = null;
@@ -217,30 +218,30 @@ public class AuthService : IAuthService
 
             if (roleResult.Succeeded)
             {
-                _logger.LogInformation(1, "Roles added!");
+                _logger.LogInformation(1, ResponseModelConstants.RoleCreated);
                 return new ResponseModel
                 {
                     IsSuccess = true,
-                    Status = "Success",
-                    Message = $"Role {roleName} added successfully"
+                    Status = ResponseModelConstants.Success,
+                    Message = ResponseModelConstants.RoleCreated
                 };
             }
             else
             {
-                _logger.LogInformation(2, "Error");
+                _logger.LogInformation(2, ResponseModelConstants.Error);
                 return new ResponseModel
                 {
                     IsSuccess = false,
-                    Status = "Error",
-                    Message = $"Error to add the role {roleName}"
+                    Status = ResponseModelConstants.Error,
+                    Message = ResponseModelConstants.RoleNotCreated
                 };
             }
         }
         return new ResponseModel
         {
             IsSuccess = false,
-            Status = "Error",
-            Message = $"The role {roleName} already exists"
+            Status = ResponseModelConstants.Error,
+            Message = ResponseModelConstants.RoleAlreadyExists
         };
     }
 
@@ -254,30 +255,30 @@ public class AuthService : IAuthService
 
             if (result.Succeeded)
             {
-                _logger.LogInformation(1, $"Role {roleName} added to user {user.UserName} successfully");
+                _logger.LogInformation(1, ResponseModelConstants.RoleAdded(roleName, user.UserName!));
                 return new ResponseModel
                 {
                     IsSuccess = true,
-                    Status = "Success",
-                    Message = $"Role {roleName} added to user {user.UserName} successfully"
+                    Status = ResponseModelConstants.Success,
+                    Message = ResponseModelConstants.RoleAdded(roleName, user.UserName!)
                 };
             }
             else
             {
-                _logger.LogInformation(1, $"Unable to add the role {roleName} to user {user.UserName}");
+                _logger.LogInformation(1, ResponseModelConstants.ErrorAddingRole(roleName, user.UserName!));
                 return new ResponseModel
                 {
                     IsSuccess = false,
-                    Status = "Error",
-                    Message = $"Unable to add the role {roleName} to user {user.UserName}"
+                    Status = ResponseModelConstants.Error,
+                    Message = ResponseModelConstants.ErrorAddingRole(roleName, user.UserName!)
                 };
             }
         }
         return new ResponseModel
         {
             IsSuccess = false,
-            Status = "Error",
-            Message = $"Unable to find the user"
+            Status = ResponseModelConstants.Error,
+            Message = ResponseModelConstants.UserNotFound
         };
     }
 
