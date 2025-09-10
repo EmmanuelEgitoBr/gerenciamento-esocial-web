@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState } from 'react'
 import { NavBar } from '../../components/NavBar/NavBar'
 import { createTrabalhador } from '../../lib/api'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 export default function CreateTrabalhador() {
   const router = useRouter()

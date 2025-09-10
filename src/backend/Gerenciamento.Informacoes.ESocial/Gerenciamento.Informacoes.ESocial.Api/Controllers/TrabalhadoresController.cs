@@ -30,7 +30,7 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult<ApiResponse<TrabalhadorDto>>> GetAllTrabalhadors()
+        public async Task<ActionResult<ApiResponse<IEnumerable<TrabalhadorDto>>>> GetAllTrabalhadores()
         {
             var result = await _mediator.Send(new GetAllTrabalhadorQuery());
 

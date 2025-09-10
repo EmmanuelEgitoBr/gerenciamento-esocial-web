@@ -8,9 +8,12 @@ export const downloadPdfFile = (id: number) => `${API}/arquivos/download-pdf/${i
 export const uploadFileUrl = (trabalhadorId: number) => `${API}/arquivos/${trabalhadorId}/upload`
 
 export const getUsuarios = (page = 1, pageSize = 10) => api.get(`/auth/users?page=${page}&pageSize=${pageSize}`)
-export const createUsuario = (payload: any) => api.post(`/auth/users`, payload)
+export const createUsuario = (payload: any) => api.post(`/auth/register`, payload)
 export const getPermissoes = (page = 1, pageSize = 10) => api.get(`/auth/roles`)
-export const addUsuarioToRole = (role: string, payload: any) => api.post(`/auth/add-user-to-role?roleName=${role}`, payload)
+export const addUsuarioToRole = (role: string, email: string) => api.post(
+    `/auth/add-user-to-role?roleName=${role}`, 
+    JSON.stringify(email),
+    { headers: { "Content-Type": "application/json" } })
 
 export const getTrabalhadores = (page = 1, pageSize = 10) => api.get(`/trabalhadores?page=${page}&pageSize=${pageSize}`)
 export const getTrabalhadorByUserId = (id: string) => api.get(`/trabalhadores/user/${id}`)

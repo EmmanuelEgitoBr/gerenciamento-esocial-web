@@ -46,6 +46,8 @@ export default function Roles() {
     const handleAssociar = async () => {
         if (!selectedRole || !selectedEmail) return;
         try {
+            console.log('Role: ', selectedRole);
+            console.log('Email', selectedEmail);
             await addUsuarioToRole(selectedRole, selectedEmail);
             setMessage({ type: "success", text: "Usuário associado com sucesso!" });
         } catch (err: any) {
