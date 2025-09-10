@@ -5,6 +5,7 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Services.Interfaces
 {
     public interface IAuthService
     {
+        Task<ApiResponse<List<UserResponseModel>>> GetAllUsersAsync();
         Task<ApiResponse<LoginResponseModel>> LoginAsync(LoginModel model);
         Task<ResponseModel> RegistrarUsuarioAsync(RegisterModel model);
         Task<ApiResponse<TokenModel>> RefreshTokenAsync(TokenModel tokenModel);

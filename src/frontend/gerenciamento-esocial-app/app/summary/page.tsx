@@ -4,10 +4,9 @@ import React, { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar/NavBar";
 import { useAuth } from "../../context/AuthProvider";
 import { getTrabalhadorByUserId } from "../lib/api";
-import { isNullOrEmpty } from "@/utils/string-utils";
 import Link from "next/link";
 
-export default function Dashboard() {
+export default function Summary() {
   const { user, loading } = useAuth();
   const [trabalhador, setTrabalhador] = useState<any | null>(null);
   const [fetching, setFetching] = useState(false);
@@ -52,18 +51,19 @@ export default function Dashboard() {
             </Link>
           )}
         </div>
-
+        <br/>
+        <br/>
         {!hasCadastro && <div>Não há cadastro disponível... favor cadastrar</div>}
 
         {hasCadastro && trabalhador && (
           <table className="min-w-full bg-white">
             <thead>
               <tr>
-                <th className="p-2 text-center">Nome</th>
-                <th className="p-2 text-center">Data de Cadastro</th>
-                <th className="p-2 text-center">Última Atualização</th>
-                <th className="p-2 text-center">Status</th>
-                <th className="p-2">Ações</th>
+                <th className="p-2 text-center" style={{color:'#013A73'}}>Nome</th>
+                <th className="p-2 text-center" style={{color:'#013A73'}}>Data de Cadastro</th>
+                <th className="p-2 text-center" style={{color:'#013A73'}}>Última Atualização</th>
+                <th className="p-2 text-center" style={{color:'#013A73'}}>Status</th>
+                <th className="p-2 text-center" style={{color:'#013A73'}}>Ações</th>
               </tr>
             </thead>
             <tbody>

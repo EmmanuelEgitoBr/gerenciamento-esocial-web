@@ -7,21 +7,22 @@ import { getTrabalhadores } from '../lib/api'
 import Link from 'next/link'
 
 export default function Dashboard() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   const [trabalhadores, setTrabalhadores] = useState<any[]>([])
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => { fetchList() }, [])
+  
+  useEffect(() => {
+    if (!loading) {
+      fetchList() 
+    }
+  }, [loading])
 
   const fetchList = async () => {
-    setLoading(true)
     try {
       const res = await getTrabalhadores()
-      setTrabalhadores(res.data || [])
+      setTrabalhadores(res.data.result || [])
     } catch (e) {
       setTrabalhadores([])
     }
-    setLoading(false)
   }
 
   const hasCadastro = trabalhadores.length > 0
@@ -31,36 +32,45 @@ export default function Dashboard() {
       <NavBar />
       <div className="p-6">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl">Cadastros</h1>
-          <Link href="/trabalhador/create">
-            <button className="px-4 py-2 rounded bg-blue-600 text-white" disabled={hasCadastro}>Novo cadastro</button>
-          </Link>
+          <h1 className="text-2xl">Lista de Cadastros Realizados</h1>
         </div>
+        <br/>
+        <hr/>
 
-        {!hasCadastro && <div>Não há cadastro disponível... favor cadastrar</div>}
+        {!hasCadastro && <div>Não há cadastro disponível</div>}
 
         {hasCadastro && (
           <table className="min-w-full bg-white">
             <thead>
               <tr>
-                <th className="p-2 text-left">Nome</th>
-                <th className="p-2 text-left">Data de Cadastro</th>
-                <th className="p-2 text-left">Última Atualização</th>
-                <th className="p-2 text-left">Status</th>
-                <th className="p-2">Ações</th>
+                <th className="p-2 text-center" style={{color:'#013A73'}}>Nome</th>
+                <th className="p-2 text-center" style={{color:'#013A73'}}>Data de Cadastro</th>
+                <th className="p-2 text-center" style={{color:'#013A73'}}>Última Atualização</th>
+                <th className="p-2 text-center" style={{color:'#013A73'}}>Status</th>
+                <th className="p-2 text-center" style={{color:'#013A73'}}>Ações</th>
               </tr>
             </thead>
             <tbody>
               {trabalhadores.map((t) => (
                 <tr key={t.trabalhadorId} className="border-t">
-                  <td className="p-2">{t.nome}</td>
-                  <td className="p-2">{new Date(t.dataCadastro).toLocaleDateString()}</td>
-                  <td className="p-2">{t.dataUltimaAtualizacao ? new Date(t.dataUltimaAtualizacao).toLocaleDateString() : '-'}</td>
-                  <td className="p-2">{t.statusCadastro}</td>
-                  <td className="p-2">
-                    <Link href={`/trabalhador/${t.trabalhadorId}/view`}><span className="mr-2 underline">Ver</span></Link>
-                    <Link href={`/trabalhador/${t.trabalhadorId}/edit`}><span className="underline">Editar</span></Link>
-                  </td>
+                  <td className="p-2 text-center">{t.nome}</td>
+                  <td className="p-2 text-center">{new Date(t.dataCadastro).toLocaleDateString()}</td>
+                  <td className="p-2 text-center">{t.dataUltimaAtualizacao ? new Date(t.dataUltimaAtualizacao).toLocaleDateString() : '-'}</td>
+                  <td className="p-2 text-center">{t.statusCadastro}</td>
+                  <td className="text-center">
+                  <div className="btn-group gap-2">
+                    <Link href={`/trabalhador/${t.trabalhadorId}/view`}>
+                      <button className="btn btn-sm btn-outline-primary cursor-pointer" title="Ver">
+                        <i className="bi bi-eye"></i>
+                      </button>
+                    </Link>
+                    <Link href={`/trabalhador/${t.trabalhadorId}/edit`}>
+                      <button className="btn btn-sm btn-outline-secondary cursor-pointer" title="Editar">
+                        <i className="bi bi-pencil"></i>
+                      </button>
+                    </Link>
+                  </div>
+                </td>
                 </tr>
               ))}
             </tbody>

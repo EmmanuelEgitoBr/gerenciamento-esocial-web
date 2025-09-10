@@ -18,9 +18,10 @@ export const NavBar: React.FC = () => {
             height={25}
           />
         </Link>
-        {isAdmin && <Link href="/dashboard">Gerenciamento de cadastros</Link>}
-        {isAdmin && <Link href="/usuarios">Criar usuários</Link>}
-        {isAdmin && <Link href="/permissoes">Criar permissões</Link>}
+        <Link href="/summary" style={{color:'green'}}>Seu Cadastro</Link>
+        {isAdmin && <Link href="/dashboard" style={{color:'green'}}>Gerenciamento de Cadastros</Link>}
+        {isAdmin && <Link href="/usuarios" style={{color:'green'}}>Usuários</Link>}
+        {isAdmin && <Link href="/permissoes" style={{color:'green'}}>Permissões</Link>}
       </div>
       <div>
         <button onClick={() => logout()} className="text-sm cursor-pointer">Logoff</button>

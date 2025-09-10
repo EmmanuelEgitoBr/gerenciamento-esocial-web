@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react'
+import Image from "next/image";
 import { useRouter } from 'next/navigation'
 import { useAuth } from '../context/AuthProvider'
 import { InputPassword } from '../app/components/Auth/InputPassword'
@@ -25,7 +26,15 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="container mb-6 flex items-center justify-center">
+        <Image
+                    src="/assets/images/logo.png"
+                    alt="Censo ESocial"
+                    width={180} 
+                    height={60}
+        />
+      </div>
       <form onSubmit={handle} className="p-8 bg-white rounded shadow w-96">
         <h2 className="text-xl mb-4">Login</h2>
         {error && <div className="text-red-600 mb-2">{error}</div>}

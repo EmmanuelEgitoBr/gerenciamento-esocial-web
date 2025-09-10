@@ -20,6 +20,18 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
+    /// <summary>
+    /// Endpoint para retornar todos os usuários do sistema
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("users")]
+    public async Task<ActionResult<ApiResponse<List<UserResponseModel>>>> RetornarTodosUsuarios()
+    {
+        var result = await _authService.GetAllUsersAsync();
+        if (!result.Success) return BadRequest(result);
+        return Ok(result);
+    }
+
     #region Authentication
 
     /// <summary>

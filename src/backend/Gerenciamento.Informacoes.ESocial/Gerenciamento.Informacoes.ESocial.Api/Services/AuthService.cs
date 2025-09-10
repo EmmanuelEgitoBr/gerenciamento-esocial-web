@@ -6,6 +6,7 @@ using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Entidades.Auth;
 using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
@@ -37,6 +38,42 @@ public class AuthService : IAuthService
         _signInManager = signInManager;
         _configuration = configuration;
         _userService = userService;
+    }
+
+    public async Task<ApiResponse<List<UserResponseModel>>> GetAllUsersAsync()
+    {
+        try
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var userModels = new List<UserResponseModel>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                UserResponseModel model = new()
+                {
+                    UserId = user.Id,
+                    Email = user.Email,
+                    Roles = roles,
+                    CreatedAt = user.CreatedAt
+                };
+                userModels.Add(model);
+            }
+
+            return new ApiResponse<List<UserResponseModel>>
+            {
+                Success = true,
+                Result = userModels
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ApiResponse<List<UserResponseModel>>
+            {
+                Success = false,
+                ErrorMessage = ex.Message
+            };
+        }
     }
 
     public async Task<ApiResponse<LoginResponseModel>> LoginAsync(LoginModel model)
