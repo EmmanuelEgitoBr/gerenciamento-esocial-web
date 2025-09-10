@@ -18,6 +18,7 @@ public class AuthService : IAuthService
     private readonly ITokenService _tokenService;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly IConfiguration _configuration;
     private readonly IUserService _userService;
 
@@ -25,6 +26,7 @@ public class AuthService : IAuthService
         ITokenService tokenService,
         UserManager<ApplicationUser> userManager,
         RoleManager<IdentityRole> roleManager,
+        SignInManager<ApplicationUser> signInManager,
         IConfiguration configuration,
         IUserService userService)
     {
@@ -32,6 +34,7 @@ public class AuthService : IAuthService
         _tokenService = tokenService;
         _userManager = userManager;
         _roleManager = roleManager;
+        _signInManager = signInManager;
         _configuration = configuration;
         _userService = userService;
     }
@@ -46,9 +49,9 @@ public class AuthService : IAuthService
 
             var authClaims = new List<Claim>
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id!),
                 new Claim(ClaimTypes.Name, user.UserName!),
                 new Claim(ClaimTypes.Email, user.Email!),
-                new Claim("id", user.UserName!),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
@@ -58,7 +61,6 @@ public class AuthService : IAuthService
             }
 
             var token = _tokenService.GenerateAccessToken(authClaims, _configuration);
-            var oi = token.ValidTo;
             var refreshToken = _tokenService.GenerateRefreshToken();
 
             _ = int.TryParse(_configuration["JWT:RefreshTokenValidityInMinutes"],
@@ -207,6 +209,31 @@ public class AuthService : IAuthService
         {
             IsSuccess = true
         };
+    }
+
+    public async Task<ApiResponse<UserResponseModel>> RecoveryUserDataAsync(string? userId, string? email)
+    {
+        // Busca roles do Identity
+        var user = await _userManager.FindByIdAsync(userId!);
+        var roles = await _userManager.GetRolesAsync(user!);
+
+        UserResponseModel model = new()
+        {
+            UserId = userId,
+            Email = email,
+            Roles = roles
+        };
+
+        return new ApiResponse<UserResponseModel>
+        {
+            Success = true,
+            Result = model
+        };
+    }
+
+    public async Task LogoutAsync()
+    {
+        await _signInManager.SignOutAsync();
     }
 
     public async Task<ResponseModel> CreateRoleAsync(string roleName)

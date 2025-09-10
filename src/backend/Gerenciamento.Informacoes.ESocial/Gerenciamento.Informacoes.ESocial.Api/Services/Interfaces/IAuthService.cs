@@ -9,6 +9,8 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Services.Interfaces
         Task<ResponseModel> RegistrarUsuarioAsync(RegisterModel model);
         Task<ApiResponse<TokenModel>> RefreshTokenAsync(TokenModel tokenModel);
         Task<ResponseModel> RevokeAsync(string username);
+        Task<ApiResponse<UserResponseModel>> RecoveryUserDataAsync(string? userId, string? email);
+        Task LogoutAsync();
         Task<ResponseModel> CreateRoleAsync(string roleName);
         Task<ResponseModel> AddUserToRoleAsync(string userIdentifier, string roleName);
     }

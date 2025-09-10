@@ -115,6 +115,18 @@ public static class DependencyInjection
                 ValidIssuer = validIssuer,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
             };
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    // Pega token do cookie
+                    if (context.Request.Cookies.ContainsKey("access_token"))
+                    {
+                        context.Token = context.Request.Cookies["access_token"];
+                    }
+                    return Task.CompletedTask;
+                }
+            };
         });
 
         services.AddCors(options =>

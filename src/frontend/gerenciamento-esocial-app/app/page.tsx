@@ -17,8 +17,8 @@ export default function LoginPage() {
     setError('')
     try {
       const user = await login(username, password)
-      if (user?.roles?.includes('admin')) router.push('/dashboard?role=admin')
-      else router.push('/dashboard')
+      if (user?.roles?.includes('admin')) router.push('/summary?role=admin')
+      else router.push('/summary')
     } catch (err: any) {
       setError(err?.response?.data?.message || 'Erro ao logar')
     }
@@ -33,7 +33,7 @@ export default function LoginPage() {
         <input value={username} onChange={(e) => setUsername(e.target.value)} className="border rounded px-3 py-2 w-full mb-3" />
         <label className="block mb-2">Senha</label>
         <InputPassword value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button className="mt-4 w-full py-2 rounded bg-blue-600 text-white">Entrar</button>
+        <button className="mt-4 w-full py-2 rounded bg-blue-600 text-white cursor-pointer">Entrar</button>
       </form>
     </div>
   )

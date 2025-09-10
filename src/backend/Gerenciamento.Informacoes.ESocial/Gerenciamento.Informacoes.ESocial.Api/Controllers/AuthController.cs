@@ -2,8 +2,10 @@
 using Gerenciamento.Informacoes.ESocial.Api.Services.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using System.Security.Claims;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers;
 
@@ -98,6 +100,35 @@ public class AuthController : ControllerBase
 
         return NoContent();
     }
+
+    /// <summary>
+    /// Recupera dados do usuário a partir do token
+    /// </summary>
+    /// <returns></returns>
+    [Authorize]
+    [HttpGet("me")]
+    public async Task<IActionResult> Me()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var email = User.FindFirst(ClaimTypes.Email)?.Value;
+
+        if (userId == null) return Unauthorized();
+
+        var result = await _authService.RecoveryUserDataAsync(userId, email);
+
+        return Ok(result);
+    }
+
+    [HttpPost("logout")]
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+        await _authService.LogoutAsync();
+        var result = await _authService.RevokeAsync(User.FindFirst(ClaimTypes.Name)?.Value!);
+        Response.Cookies.Delete("access_token");
+        return Ok(new { message = "Logoff realizado com sucesso" });
+    }
+
     #endregion
 
     #region Authorization Policies

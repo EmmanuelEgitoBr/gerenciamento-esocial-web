@@ -1,84 +1,97 @@
 ﻿using Gerenciamento.Informacoes.ESocial.Api.Services;
 using Gerenciamento.Informacoes.ESocial.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using System.Text;
 
-namespace Gerenciamento.Informacoes.ESocial.Api.Extensions
+namespace Gerenciamento.Informacoes.ESocial.Api.Extensions;
+
+public static class ApiBuilderExtensions
 {
-    public static class ApiBuilderExtensions
+    public static void AddSwaggerConfiguration(this WebApplicationBuilder builder)
     {
-        public static void AddSwaggerConfiguration(this WebApplicationBuilder builder)
+        builder.Services.AddSwaggerGen(options =>
         {
-            builder.Services.AddSwaggerGen(options =>
+            options.SwaggerDoc("v1", new()
             {
-                options.SwaggerDoc("v1", new()
+                Title = "API de Gerenciamento de Informações",
+                Version = "v1",
+                Description = "Api destinada para o gerenciamento de informações que estão integradas ao E-Social",
+                Contact = new Microsoft.OpenApi.Models.OpenApiContact()
                 {
-                    Title = "API de Gerenciamento de Informações",
-                    Version = "v1",
-                    Description = "Api destinada para o gerenciamento de informações que estão integradas ao E-Social",
-                    Contact = new Microsoft.OpenApi.Models.OpenApiContact()
-                    {
-                        Name = "Emmanuel Egito",
-                        Url = new Uri("https://github.com/EmmanuelEgitoBr/gerenciamento-esocial-web")
-                    }
-                });
+                    Name = "Emmanuel Egito",
+                    Url = new Uri("https://github.com/EmmanuelEgitoBr/gerenciamento-esocial-web")
+                }
+            });
 
-                // Adiciona o arquivo XML gerado para incluir os comentários
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                options.IncludeXmlComments(xmlPath);
+            // Adiciona o arquivo XML gerado para incluir os comentários
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            options.IncludeXmlComments(xmlPath);
 
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Bearer JWT",
+            });
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
                 {
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "Bearer JWT",
-                });
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
+                    new OpenApiSecurityScheme
                     {
-                        new OpenApiSecurityScheme
+                        Reference = new OpenApiReference
                         {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[] {}
-                    }
-                });
-                options.SupportNonNullableReferenceTypes();
-                options.MapType<IFormFile>(() => new Microsoft.OpenApi.Models.OpenApiSchema
-                {
-                    Type = "string",
-                    Format = "binary"
-                });
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new string[] {}
+                }
             });
-        }
-
-        public static void AddAuthConfiguration(this WebApplicationBuilder builder)
-        {
-            builder.Services.AddScoped<ITokenService, TokenService>();
-            builder.Services.AddScoped<IAuthService, AuthService>();
-        }
-
-        public static void AddCorsConfiguration(this WebApplicationBuilder builder)
-        {
-            builder.Services.AddCors(options =>
+            options.SupportNonNullableReferenceTypes();
+            options.MapType<IFormFile>(() => new Microsoft.OpenApi.Models.OpenApiSchema
             {
-                options.AddPolicy("FrontendLocalhost", policy =>
-                {
-                    policy
-                        .WithOrigins("http://localhost:3000") // obrigatoriamente a origem do front
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowCredentials(); // importante para cookies
-                });
+                Type = "string",
+                Format = "binary"
             });
-        }
+        });
+    }
+
+    public static void AddAuthServices(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddScoped<ITokenService, TokenService>();
+        builder.Services.AddScoped<IAuthService, AuthService>();
+    }
+
+    public static void AddAuthConfiguration(this WebApplicationBuilder builder)
+    {
+        builder.Services.ConfigureApplicationCookie(options =>
+        {
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            options.Cookie.SameSite = SameSiteMode.None;
+        });
+
+    }
+
+    public static void AddCorsConfiguration(this WebApplicationBuilder builder)
+    {
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("FrontendLocalhost", policy =>
+            {
+                policy
+                    .WithOrigins("http://localhost:3000") // obrigatoriamente a origem do front
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials(); // importante para cookies
+            });
+        });
     }
 }
