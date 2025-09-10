@@ -119,6 +119,10 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Endpoint responsável pelo logout do sistema
+    /// </summary>
+    /// <returns></returns>
     [HttpPost("logout")]
     [Authorize]
     public async Task<IActionResult> Logout()
