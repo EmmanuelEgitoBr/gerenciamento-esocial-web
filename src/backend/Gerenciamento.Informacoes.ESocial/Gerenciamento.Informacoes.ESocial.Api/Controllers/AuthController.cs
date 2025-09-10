@@ -2,9 +2,7 @@
 using Gerenciamento.Informacoes.ESocial.Api.Services.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Dominio.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using System.Security.Claims;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers;
@@ -28,6 +26,18 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<ApiResponse<List<UserResponseModel>>>> RetornarTodosUsuarios()
     {
         var result = await _authService.GetAllUsersAsync();
+        if (!result.Success) return BadRequest(result);
+        return Ok(result);
+    }
+
+    /// <summary>
+    /// Endpoint para retornar todos os tipos de usuários do sistema
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("roles")]
+    public async Task<ActionResult<ApiResponse<List<string>>>> RetornarTodosRoles()
+    {
+        var result = await _authService.GetAllRolesAsync();
         if (!result.Success) return BadRequest(result);
         return Ok(result);
     }

@@ -76,6 +76,28 @@ public class AuthService : IAuthService
         }
     }
 
+    public async Task<ApiResponse<List<string>>> GetAllRolesAsync()
+    {
+        try
+        {
+            var roles = await _roleManager.Roles.ToListAsync();
+            var roleNames = roles.Select(r => r.Name!).ToList();
+            return new ApiResponse<List<string>>
+            {
+                Success = true,
+                Result = roleNames
+            };
+        }
+        catch (Exception ex)
+        {
+            return new ApiResponse<List<string>>
+            {
+                Success = false,
+                ErrorMessage = ex.Message
+            };
+        }
+    }
+
     public async Task<ApiResponse<LoginResponseModel>> LoginAsync(LoginModel model)
     {
         var user = await GetUserByInputType(model.InputValue!);
