@@ -3,6 +3,15 @@ import axios from 'axios'
 const API = process.env.NEXT_PUBLIC_API_BASE
 export const api = axios.create({ baseURL: API, withCredentials: true })
 
+// Adiciona token automaticamente se existir
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token"); // ou useAuth().token
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export const downloadFile = (id: number) => `${API}/arquivos/download/${id}`
 export const downloadPdfFile = (id: number) => `${API}/arquivos/download-pdf/${id}`
 export const uploadFileUrl = (trabalhadorId: number) => `${API}/arquivos/${trabalhadorId}/upload`
@@ -18,7 +27,14 @@ export const addUsuarioToRole = (role: string, email: string) => api.post(
 export const getTrabalhadores = (page = 1, pageSize = 10) => api.get(`/trabalhadores?page=${page}&pageSize=${pageSize}`)
 export const getTrabalhadorByUserId = (id: string) => api.get(`/trabalhadores/user/${id}`)
 export const getTrabalhadorById = (id: number) => api.get(`/trabalhadores/${id}`)
-export const createTrabalhador = (payload: any) => api.post(`/trabalhadores/create`, payload)
+//export const createTrabalhador = (payload: any) => api.post(`/trabalhadores/create`, payload)
+export const createTrabalhador = (payload: any) =>
+  api.post(`/trabalhadores/create`, payload, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json"
+    },
+  });
 export const updateTrabalhador = (payload: any) => api.put(`/trabalhadores/update`, payload)
 export const atualizarStatus = (id: number, status: number) => api.put(`/trabalhadores/${id}/cadastro/atualizar-status`, { status })
 

@@ -6,6 +6,7 @@ namespace Gerenciamento.Informacoes.ESocial.Aplicacao.Command.TrabalhadorCommand
 
 public class CriarTrabalhadorCommand : IRequest<ApiResponse<int>>
 {
+    public string? UserId { get; set; }
     public int Tipo { get; set; }
     public string? Nome { get; set; }
     public int Sexo { get; set; }

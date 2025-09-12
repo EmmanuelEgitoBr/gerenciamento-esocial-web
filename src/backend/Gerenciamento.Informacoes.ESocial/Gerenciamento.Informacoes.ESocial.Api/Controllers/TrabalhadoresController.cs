@@ -1,14 +1,16 @@
-﻿using Gerenciamento.Informacoes.ESocial.Dominio.Models;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.TrabalhadorCommand.AtualizarTrabalhadorCommand;
+﻿using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.TrabalhadorCommand.AtualizarTrabalhadorCommand;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.TrabalhadorCommand.CriarTrabalhadorCommand;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Command.TrabalhadorCommand.RemoverTrabalhadorCommand;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Dtos;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery.GetAllTrabalhadorQuery;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery.GetTrabalhadorByIdQuery;
-using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
 using Gerenciamento.Informacoes.ESocial.Aplicacao.Query.Queries.TrabalhadorQuery.GetTrabalhadorByUserIdQuery;
+using Gerenciamento.Informacoes.ESocial.Aplicacao.Services.Interfaces;
+using Gerenciamento.Informacoes.ESocial.Dominio.Models;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
 {
@@ -72,9 +74,13 @@ namespace Gerenciamento.Informacoes.ESocial.Api.Controllers
         /// </summary>
         /// <param name="command"></param>
         /// <returns></returns>
+        [Authorize]
         [HttpPost("create")]
         public async Task<ActionResult<ApiResponse<int>>> CriarTrabalhador([FromBody] CriarTrabalhadorCommand command)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            command.UserId = userId;
+
             var result = await _mediator.Send(command);
 
             if (!result.Success) return BadRequest(result);

@@ -34,6 +34,7 @@ public class CriarTrabalhadorCommandHandler : IRequestHandler<CriarTrabalhadorCo
     {
         return new Trabalhador
         {
+            UserId = request.UserId,
             Tipo = (TipoVinculo)request.Tipo,
             Nome = request.Nome,
             Sexo = (Sexo)request.Sexo,
