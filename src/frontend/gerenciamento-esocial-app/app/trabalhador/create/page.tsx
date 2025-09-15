@@ -4,41 +4,11 @@ import React, { useState, useEffect } from "react";
 import { NavBar } from "../../components/NavBar/NavBar";
 import { createTrabalhador } from "../../lib/api";
 import { useRouter } from "next/navigation";
+import { TipoVinculo, Sexo, RacaCor, EstadoCivil, GrauInstrucao, StatusCadastro } from "@/models/Trabalhador";
+import { TrabalhadorForm } from "@/models/Trabalhador";
+import { Dependente } from "@/models/Dependente";
 import { DependenteModal } from "@/app/components/DependenteModal/DependenteModal";
 import { useAuth } from '../../../context/AuthProvider'
-
-// ====== Tipos ======
-export type TipoVinculo = 1 | 2 | 3; // CLT=1, Estagiário=2, Outro=3
-export type Sexo = "Masculino" | "Feminino" | "";
-export type RacaCor = "Branco" | "Negro" | "Pardo" | "Indígena" | "Amarelo" | "";
-export type EstadoCivil = "Solteiro" | "Casado" | "Divorciado" | "Viúvo" | "";
-export type GrauInstrucao = "Fundamental" | "Medio" | "Superior" | "Pos" | "Mestrado" | "Doutorado" | "";
-
-export interface Dependente {
-  nomeDependente: string;
-  tipoDependente: 1 | 2 | 3; // Filho=1, Cônjuge=2, Outro=3
-}
-
-export interface TrabalhadorForm {
-  nome: string;
-  tipo: TipoVinculo;
-  sexo: Sexo;
-  racaCor: RacaCor;
-  estadoCivil: EstadoCivil;
-  grauInstrucao: GrauInstrucao;
-  isPrimeiroEmprego: boolean;
-  codigoNomeTravTrans: string;
-  dataNascimento: string;
-  municipioNascimento: string;
-  ufNascimento: string;
-  paisNascimento: string;
-  nacionalidade: string;
-  nomeMae: string;
-  nomePai: string;
-  recebeBeneficioPrevidencia: boolean;
-  possuiDependente: boolean;
-  dependentes: Dependente[];
-}
 
 // ====== Mapeamentos para backend ======
 const sexoMap: Record<Sexo, number> = { "": 0, Masculino: 1, Feminino: 2 };
@@ -66,10 +36,17 @@ const grauInstrucaoMap: Record<GrauInstrucao, number> = {
   Mestrado: 5,
   Doutorado: 6,
 };
+const statusCadastroMap: Record<StatusCadastro, number> = {
+  Criado: 0,
+  Pendente: 1,
+  Concluido: 2
+};
+
 
 export default function CreateTrabalhador() {
   const router = useRouter();
   const { user, loading } = useAuth();
+  const [activeTab, setActiveTab] = useState<"pessoal" | "documentos" | "endereco" | "deficiencia" | "contato">("pessoal");
 
   const [form, setForm] = useState<TrabalhadorForm>({
     nome: "",
@@ -87,6 +64,51 @@ export default function CreateTrabalhador() {
     nacionalidade: "",
     nomeMae: "",
     nomePai: "",
+    documentosPessoais: {
+      cpf: "",
+      nisPisPasep: "",
+      numeroCtps: "",
+      numeroSerieCtps: "",
+      ufCtps: "",
+      numeroRg: "",
+      emissaoRg: "",
+      dataExpedicaoRg: "",
+      numeroRegistroOc: "",
+      emissaoOc: "",
+      dataExpedOc: "",
+      dataValidadeOc: "",
+      numeroCnh: "",
+      dataExpedicaoCnh: "",
+      ufCnh: "",
+      dataValidadeCnh: "",
+      dataPrimeiraHabilitacao: "",
+      categoriaCnh: "",
+    },
+    enderecoResidencial: {
+      tipoLogradouro: "",
+      logradouro: "",
+      numero: "",
+      complemento: "",
+      bairro: "",
+      cep: "",
+      municipio: "",
+      uf: "",
+    },
+    dadosDeficiencia: {
+      temDeficienciaFisica: false,
+      temDeficienciaVisual: false,
+      temDeficienciaAuditiva: false,
+      temDeficienciaMental: false,
+      temDeficienciaIntelectual: false,
+    },
+    contato: {
+      telefone1: "",
+      telefone2: "",
+      email1: "",
+      email2: "",
+      descricao: "",
+    },
+    statusCadastro: "Criado",
     recebeBeneficioPrevidencia: false,
     possuiDependente: false,
     dependentes: [],
@@ -107,7 +129,7 @@ export default function CreateTrabalhador() {
     if (!loading && !user) router.push("/");
   }, [user, loading]);
 
-   // ====== Handle Change ======
+  // ====== Handle Change ======
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -171,9 +193,31 @@ export default function CreateTrabalhador() {
     <div>
       <NavBar />
       <div className="p-6 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-semibold mb-6">Novo Trabalhador</h2>
+      <h2 className="text-2xl font-semibold mb-6">Cadastro de Novo Trabalhador</h2>
+      <div className="flex border-b mb-4">
+        {[
+          { key: "pessoal", label: "Dados Pessoais" },
+          { key: "documentos", label: "Documentos" },
+          { key: "endereco", label: "Endereço" },
+          { key: "contato", label: "Contato" },
+          { key: "deficiencia", label: "Deficiência" }
+        ].map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key as any)}
+            className={`px-4 py-2 -mb-px border-b-2 cursor-pointer 
+              ${activeTab === tab.key
+                ? "border-blue-600 font-semibold"
+                : "border-transparent"
+              }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
 
-        {/* ===== Dados Pessoais ===== */}
+      {/*{activeTab === "pessoal" && ( */}
+      <div className={`${activeTab === "pessoal" ? "block pointer-events-auto" : "hidden pointer-events-none"}`}>
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
             <label className="block">Nome</label>
@@ -266,7 +310,6 @@ export default function CreateTrabalhador() {
           </div>
         </div>
 
-        {/* ===== Nascimento ===== */}
         <h3 className="text-lg font-semibold mb-2">Dados de Nascimento</h3>
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
@@ -317,7 +360,6 @@ export default function CreateTrabalhador() {
           </div>
         </div>
 
-        {/* ===== Filiação ===== */}
         <h3 className="text-lg font-semibold mb-2">Filiação</h3>
         <div className="grid grid-cols-2 gap-4 mb-6">
           <div>
@@ -340,7 +382,7 @@ export default function CreateTrabalhador() {
           </div>
         </div>
 
-        {/* Outros Dados */}
+
         <div className="mb-6">
           <label className="flex items-center gap-2">
             <input
@@ -382,7 +424,6 @@ export default function CreateTrabalhador() {
                 Cadastrar Dependente
               </button>
 
-              {/* Lista de dependentes */}
               {dependentes.length > 0 && (
                 <div className="mt-4">
                   <h3 className="text-lg font-semibold mb-2">Dependentes</h3>
@@ -405,7 +446,6 @@ export default function CreateTrabalhador() {
 
         </div>
 
-        {/* Ações */}
         <div className="flex gap-3 mt-6">
           <button
             onClick={handleSave}
@@ -416,15 +456,532 @@ export default function CreateTrabalhador() {
           </button>
         </div>
       </div>
-      {/* Modal reutilizável */}
-      <DependenteModal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        onSave={(dep) => {
-          setDependentes([...dependentes, dep]);
-          setOpenModal(false);
-        }}
-      />
+      {/*})}*/}
+      {/*{activeTab === "documentos" && (*/}
+      <div className={`${activeTab === "documentos" ? "block pointer-events-auto" : "hidden pointer-events-none"}`} >
+        <h3 className="text-lg font-semibold mb-2">Documentos</h3>
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block">CPF:</label>
+            <input
+              type="text"
+              placeholder="CPF"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.cpf}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label className="block">Pis Pasep</label>
+            <input
+              type="text"
+              placeholder="Número Pis Pasep"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.nisPisPasep || ""}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block">Número CTPS:</label>
+            <input
+              type="text"
+              placeholder="Número CTPS"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.numeroCtps || ""}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label className="block">Número Série CTPS</label>
+            <input
+              type="text"
+              placeholder="Número Série Ctps"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.numeroSerieCtps || ""}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block">Emissão CTPS:</label>
+            <select
+              name="ufCtps"
+              value={form.documentosPessoais?.ufCtps || ""}
+              onChange={handleChange}
+              className="border w-full p-2"
+            >
+              <option value="AC">AC</option>
+              <option value="AL">AL</option>
+              <option value="AM">AM</option>
+              <option value="AP">AP</option>
+              <option value="BA">BA</option>
+              <option value="CE">CE</option>
+              <option value="DF">DF</option>
+              <option value="ES">ES</option>
+              <option value="GO">GO</option>
+              <option value="MA">MA</option>
+              <option value="MG">MG</option>
+              <option value="MS">MS</option>
+              <option value="MT">MT</option>
+              <option value="PA">PA</option>
+              <option value="PB">PB</option>
+              <option value="PE">PE</option>
+              <option value="PI">PI</option>
+              <option value="PR">PR</option>
+              <option value="RJ">RJ</option>
+              <option value="RN">RN</option>
+              <option value="RO">RO</option>
+              <option value="RS">RS</option>
+              <option value="SC">SC</option>
+              <option value="SE">SE</option>
+              <option value="SP">SP</option>
+              <option value="TO">TO</option>
+            </select>
+          </div>
+          <div>
+            <label className="block">Número RG</label>
+            <input
+              type="text"
+              placeholder="RG"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.numeroRg || ""}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block">Emissão RG:</label>
+            <select
+              name="emissaoRg"
+              value={form.documentosPessoais?.emissaoRg || ""}
+              onChange={handleChange}
+              className="border w-full p-2"
+            >
+              <option value="AC">AC</option>
+              <option value="AL">AL</option>
+              <option value="AM">AM</option>
+              <option value="AP">AP</option>
+              <option value="BA">BA</option>
+              <option value="CE">CE</option>
+              <option value="DF">DF</option>
+              <option value="ES">ES</option>
+              <option value="GO">GO</option>
+              <option value="MA">MA</option>
+              <option value="MG">MG</option>
+              <option value="MS">MS</option>
+              <option value="MT">MT</option>
+              <option value="PA">PA</option>
+              <option value="PB">PB</option>
+              <option value="PE">PE</option>
+              <option value="PI">PI</option>
+              <option value="PR">PR</option>
+              <option value="RJ">RJ</option>
+              <option value="RN">RN</option>
+              <option value="RO">RO</option>
+              <option value="RS">RS</option>
+              <option value="SC">SC</option>
+              <option value="SE">SE</option>
+              <option value="SP">SP</option>
+              <option value="TO">TO</option>
+            </select>
+          </div>
+          <div>
+            <label className="block">Expedição Rg</label>
+            <input
+              type="date"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.dataExpedicaoRg || ""}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block">Número Registro Oc:</label>
+            <input
+              type="text"
+              placeholder="Número Registro Oc"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.numeroRegistroOc || ""}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label className="block">Emissão Oc</label>
+            <select
+              name="emissaoOc"
+              value={form.documentosPessoais?.emissaoOc || ""}
+              onChange={handleChange}
+              className="border w-full p-2"
+            >
+              <option value="AC">AC</option>
+              <option value="AL">AL</option>
+              <option value="AM">AM</option>
+              <option value="AP">AP</option>
+              <option value="BA">BA</option>
+              <option value="CE">CE</option>
+              <option value="DF">DF</option>
+              <option value="ES">ES</option>
+              <option value="GO">GO</option>
+              <option value="MA">MA</option>
+              <option value="MG">MG</option>
+              <option value="MS">MS</option>
+              <option value="MT">MT</option>
+              <option value="PA">PA</option>
+              <option value="PB">PB</option>
+              <option value="PE">PE</option>
+              <option value="PI">PI</option>
+              <option value="PR">PR</option>
+              <option value="RJ">RJ</option>
+              <option value="RN">RN</option>
+              <option value="RO">RO</option>
+              <option value="RS">RS</option>
+              <option value="SC">SC</option>
+              <option value="SE">SE</option>
+              <option value="SP">SP</option>
+              <option value="TO">TO</option>
+            </select>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block">Expedição Oc:</label>
+            <input
+              type="date"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.dataExpedOc || ""}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label className="block">Validade Oc</label>
+            <input
+              type="date"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.dataValidadeOc || ""}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block">Número CNH:</label>
+            <input
+              type="text"
+              placeholder="Número Cnh"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.numeroCnh || ""}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label className="block">Expedição CNH</label>
+            <input
+              type="date"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.dataExpedicaoCnh || ""}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block">Uf CNH:</label>
+            <select
+              name="ufCnh"
+              value={form.documentosPessoais?.ufCnh || ""}
+              onChange={handleChange}
+              className="border w-full p-2"
+            >
+              <option value="AC">AC</option>
+              <option value="AL">AL</option>
+              <option value="AM">AM</option>
+              <option value="AP">AP</option>
+              <option value="BA">BA</option>
+              <option value="CE">CE</option>
+              <option value="DF">DF</option>
+              <option value="ES">ES</option>
+              <option value="GO">GO</option>
+              <option value="MA">MA</option>
+              <option value="MG">MG</option>
+              <option value="MS">MS</option>
+              <option value="MT">MT</option>
+              <option value="PA">PA</option>
+              <option value="PB">PB</option>
+              <option value="PE">PE</option>
+              <option value="PI">PI</option>
+              <option value="PR">PR</option>
+              <option value="RJ">RJ</option>
+              <option value="RN">RN</option>
+              <option value="RO">RO</option>
+              <option value="RS">RS</option>
+              <option value="SC">SC</option>
+              <option value="SE">SE</option>
+              <option value="SP">SP</option>
+              <option value="TO">TO</option>
+            </select>
+          </div>
+          <div>
+            <label className="block">Validade CNH</label>
+            <input
+              type="date"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.dataValidadeCnh || ""}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <label className="block">Primeira Habilitação:</label>
+            <input
+              type="date"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.dataPrimeiraHabilitacao || ""}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <label className="block">Categoria CNH</label>
+            <input
+              type="text"
+              placeholder="Categoria Cnh"
+              className="border p-2 w-full"
+              value={form.documentosPessoais?.categoriaCnh || ""}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+      </div>
+      {/*})}*/}
+
+      {activeTab === "endereco" && (
+        <div className={activeTab === "endereco" ? "block" : "hidden"}>
+          <h3 className="text-lg font-semibold mb-2">Endereço</h3>
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <label className="block">Tipo de Logradouro:</label>
+              <select
+                name="tipoLogradouro"
+                value={form.enderecoResidencial?.tipoLogradouro || ""}
+                onChange={handleChange}
+                className="border w-full p-2"
+              >
+                <option value="">Selecione</option>
+                <option value="Avenida">Avenida</option>
+                <option value="Rua">Rua</option>
+                <option value="Travessa">Travessa</option>
+                <option value="Alameda">Alameda</option>
+                <option value="Praça">Praça</option>
+                <option value="Largo">Largo</option>
+                <option value="Rodovia">Rodovia</option>
+                <option value="Viela">Viela</option>
+                <option value="Beira">Beira</option>
+                <option value="Pátio">Pátio</option>
+                <option value="Setor">Setor</option>
+              </select>
+            </div>
+            <div>
+              <label className="block">Logradouro:</label>
+              <input
+                type="text"
+                placeholder="Logradouro"
+                className="border p-2 w-full"
+                value={form.enderecoResidencial?.logradouro || ""}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <label className="block">Número:</label>
+              <input
+                type="text"
+                placeholder="Númeroo"
+                className="border p-2 w-full"
+                value={form.enderecoResidencial?.numero || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label className="block">Complemento:</label>
+              <input
+                type="text"
+                placeholder="Complemento"
+                className="border p-2 w-full"
+                value={form.enderecoResidencial?.complemento || ""}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <label className="block">Bairro:</label>
+              <input
+                type="text"
+                placeholder="Bairro"
+                className="border p-2 w-full"
+                value={form.enderecoResidencial?.bairro || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label className="block">CEP:</label>
+              <input
+                type="text"
+                placeholder="CEP"
+                className="border p-2 w-full"
+                value={form.enderecoResidencial?.cep || ""}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <label className="block">Município:</label>
+              <input
+                type="text"
+                placeholder="Município"
+                className="border p-2 w-full"
+                value={form.enderecoResidencial?.municipio || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label className="block">UF:</label>
+              <select
+                name="uf"
+                value={form.enderecoResidencial?.uf || ""}
+                onChange={handleChange}
+                className="border w-full p-2"
+              >
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AM">AM</option>
+                <option value="AP">AP</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MG">MG</option>
+                <option value="MS">MS</option>
+                <option value="MT">MT</option>
+                <option value="PA">PA</option>
+                <option value="PB">PB</option>
+                <option value="PE">PE</option>
+                <option value="PI">PI</option>
+                <option value="PR">PR</option>
+                <option value="RJ">RJ</option>
+                <option value="RN">RN</option>
+                <option value="RO">RO</option>
+                <option value="RS">RS</option>
+                <option value="SC">SC</option>
+                <option value="SE">SE</option>
+                <option value="SP">SP</option>
+                <option value="TO">TO</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === "contato" && (
+        <div className={activeTab === "contato" ? "block" : "hidden"}>
+          <h3 className="text-lg font-semibold mb-2">Dados de Contato</h3>
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <input
+                type="text"
+                placeholder="Telefone Principal"
+                className="border p-2 w-full"
+                value={form.contato?.telefone1 || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <input
+                type="text"
+                placeholder="Telefone Alternativo"
+                className="border p-2 w-full"
+                value={form.contato?.telefone2 || ""}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <input
+                type="email"
+                placeholder="Email Principal"
+                className="border p-2 w-full"
+                value={form.contato?.email1 || ""}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                placeholder="Email Alternativo"
+                className="border p-2 w-full"
+                value={form.contato?.email2 || ""}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mb-6">
+            <div>
+              <input
+                type="text"
+                placeholder="Descrição do contato"
+                className="border p-2 w-full"
+                value={form.contato?.descricao || ""}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === "deficiencia" && (
+        <div className={activeTab === "deficiencia" ? "block" : "hidden"}>
+          <div className="space-y-2">
+            {Object.keys(form.dadosDeficiencia!).map((key) => (
+              <label key={key} className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={(form.dadosDeficiencia as any)[key]}
+                  onChange={(e) =>
+                    setForm({
+                      ...form,
+                      dadosDeficiencia: {
+                        ...form.dadosDeficiencia,
+                        [key]: e.target.checked,
+                      },
+                    })
+                  }
+                />
+                {key}
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
+      {/* Modal reutilizável */ }
+  <DependenteModal
+    open={openModal}
+    onClose={() => setOpenModal(false)}
+    onSave={(dep) => {
+      setDependentes([...dependentes, dep]);
+      setOpenModal(false);
+    }}
+  />
+    </div >
   );
 }

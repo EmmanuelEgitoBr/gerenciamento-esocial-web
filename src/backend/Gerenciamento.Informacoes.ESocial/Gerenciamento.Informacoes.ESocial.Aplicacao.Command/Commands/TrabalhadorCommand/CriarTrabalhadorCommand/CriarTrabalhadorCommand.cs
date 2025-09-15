@@ -27,7 +27,4 @@ public class CriarTrabalhadorCommand : IRequest<ApiResponse<int>>
     public Deficiencia? DadosDeficiencia { get; set; }
     public bool RecebeBeneficioPrevidencia { get; set; }
     public Contato? Contato { get; set; }
-    public int StatusCadastro { get; set; }
-    public DateTime DataCadastro { get; set; } = DateTime.Now;
-    public DateTime? DataUltimaAtualizacao { get; set; }
 }
