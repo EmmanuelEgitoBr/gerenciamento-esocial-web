@@ -3,3 +3,5 @@ Projeto desenvolvido para o gerenciamento de informações visando integração 
 
 ## Backend
 Desenvolido em .NET Core 8, banco SQl e Entity Framework Core como ORM. Seguiu-se o padrão CQRS e o serviço de mensageria emprega o Rabbit MQ.
+## Frontend
+Desenvolvido em React Next.js versão 19
